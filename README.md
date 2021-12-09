@@ -1,26 +1,5 @@
 # Mina Snapp: Mina Secret Exchange
 
-This template uses TypeScript.
+`Mina-Secret-Exchange is a zk-powered Smart Contract (Snapp) submission for the Mina Snapp Bootcamp 2021. `
 
-## How to build
-
-```sh
-npm run build
-```
-
-## How to run tests
-
-```sh
-npm run test
-npm run testw # watch mode
-```
-
-## How to run coverage
-
-```sh
-npm run coverage
-```
-
-## License
-
-[Apache-2.0](LICENSE)
+The secret exchange allows users to buy imaginary tokens (tokens aren't implemented, only simulated) after successfully providing the solution to a series of math problems.
