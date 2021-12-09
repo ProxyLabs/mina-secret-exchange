@@ -14,6 +14,7 @@ const init = async () => {
   console.log(a);
   console.log(b);
   console.log(c);
+  console.log('222');
 };
 
 init();
