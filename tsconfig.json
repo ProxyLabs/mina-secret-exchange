@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "esnext",
-    "outDir": "./public",
+    "outDir": "./dist",
     "rootDir": "./src",
     "useDefineForClassFields": false,
     "strict": false,
