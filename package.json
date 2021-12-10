@@ -1,34 +1,46 @@
 {
-  "name": "mina-secret-exchange",
-  "version": "0.1.4",
-  "description": "",
-  "author": "",
-  "license": "Apache-2.0",
-  "keywords": [],
-  "main": "build/src/index.js",
-  "types": "build/src/index.d.ts",
+  "name": "esbuild-vue-cli",
+  "version": "0.1.0",
   "type": "module",
+  "private": true,
   "scripts": {
-    "test": "jest",
-    "testw": "jest --watch",
-    "coverage": "jest --coverage",
-    "build": "tsc -p tsconfig.json",
-    "prepare": "husky install",
-    "format": "prettier --write --ignore-unknown **/*"
+    "serve": "node src/server.js",
+    "esbuild": "node src/build.js",
+    "build": "npx tsc && npm run esbuild && npm run serve"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "snarkyjs": "^0.1.11",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.24",
-    "husky": "^7.0.1",
-    "jest": "^27.0.6",
-    "lint-staged": "^11.0.1",
-    "prettier": "^2.3.2",
-    "snarkyjs": "^0.1.9",
-    "ts-jest": "^27.0.4",
-    "typescript": "^4.3.5"
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "babel-eslint": "^10.1.0",
+    "esbuild": "^0.14.2",
+    "esbuild-vue": "^1.0.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "vue-template-compiler": "^2.6.11"
   },
-  "lint-staged": {
-    "**/*": [
-      "prettier --write --ignore-unknown"
-    ]
-  }
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
