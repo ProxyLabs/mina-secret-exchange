@@ -30,7 +30,6 @@ class QuadraticFunction extends CircuitValue {
     this.a = a;
     this.b = b;
     this.c = c;
-    //console.log(`new qf created with ${a} ${b} ${c}`);
   }
 }
 __decorate(

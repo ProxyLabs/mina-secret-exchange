@@ -1,9 +1,5 @@
 import { shutdown } from 'snarkyjs';
-import {
-  deployContract,
-  getEquationParameters,
-  submitSolution,
-} from './contract-util.js';
+import { deployContract, getEquationParameters } from './contract-util.js';
 async function init() {
   // using module to keep the values within humand sovle-able range
   let max = 5;
@@ -24,19 +20,14 @@ async function init() {
   console.log(`b ${b}`);
   console.log(`c ${c}`);
   await deployContract(a, b, c);
-  sanityCheck(a, b, c, -4);
+  /*
+    console.log(sanityCheck(a, b, c, -4));
+    await submitSolution(1); */
   let [x, y, z] = await getEquationParameters();
-  console.log(x);
-  console.log(y);
-  console.log(z);
-  await submitSolution(3);
-  //await submitSolution(-2);
-  /*   let [x, y, z] = await getEquationParameters();
-  
-    let [x1, x2] = solver(x, y, z);
-    console.log(
-      `deployed snapp with equation of form ${x}x² + ${y}x - ${z}; possible solutions would be x1 = ${x1}, x2 = ${x2}`
-    ); */
+  let [x1, x2] = solver(x, y, z);
+  console.log(
+    `deployed snapp with equation of form ${x}x² + ${y}x - ${z}; possible solutions would be x1 = ${x1}, x2 = ${x2}`
+  );
 }
 function sanityCheck(a, b, c, x) {
   // sanity check possible solution

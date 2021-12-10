@@ -25,16 +25,20 @@ async function deployContract(a, b, c) {
     await exchangeInstance.setParameters(Field(a), Field(b), Field(c));
   })
     .send()
-    .wait();
+    .wait()
+    .catch((e) => {
+      console.log(e);
+    });
 }
 async function submitSolution(x) {
   await Mina.transaction(account1, async () => {
     await exchangeInstance.verifySolution(new Field(x));
-    /*     const winner = Party.createUnsigned(account2Pubkey);
-        winner.balance.addInPlace(Exercise2.UpdateReward); */
   })
     .send()
-    .wait();
+    .wait()
+    .catch((e) => {
+      console.log(e);
+    });
 }
 async function getEquationParameters() {
   let snappState = (await Mina.getAccount(snappAddress)).snapp.appState;

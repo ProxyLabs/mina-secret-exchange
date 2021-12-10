@@ -7,6 +7,7 @@ import {
   UInt64,
   Party,
   PublicKey,
+  UInt32,
 } from 'snarkyjs';
 
 import { SecretExchange } from './contract.js';
@@ -42,17 +43,21 @@ async function deployContract(a: number, b: number, c: number) {
     await exchangeInstance.setParameters(Field(a), Field(b), Field(c));
   })
     .send()
-    .wait();
+    .wait()
+    .catch((e) => {
+      console.log(e);
+    });
 }
 
 async function submitSolution(x: number) {
   await Mina.transaction(account1, async () => {
     await exchangeInstance.verifySolution(new Field(x));
-    /*     const winner = Party.createUnsigned(account2Pubkey);
-    winner.balance.addInPlace(Exercise2.UpdateReward); */
   })
     .send()
-    .wait();
+    .wait()
+    .catch((e) => {
+      console.log(e);
+    });
 }
 
 async function getEquationParameters(): Promise<[number, number, number]> {

@@ -33,21 +33,20 @@ class SecretExchange extends SmartContract {
   }
   async setParameters(a, b, c) {
     // TODO: do some assertions before you can set a state
-    this.quadraticFunction.set(new QuadraticFunction(a, b, c));
+    //this.quadraticFunction.set(new QuadraticFunction(a, b, c));
   }
   async verifySolution(x) {
     // a * x * x + b * x + c;
-    const a = (await this.quadraticFunction.get()).a;
-    const b = (await this.quadraticFunction.get()).b;
-    const c = (await this.quadraticFunction.get()).c;
-    console.log('x ' + x.toString());
-    console.log(a);
-    console.log(b);
-    console.log(c);
-    /*     console.log(a.toString());
-        console.log(b.toString());
-        console.log(c.toString()); */
-    // const x = await this.x.get();
+    const func = await this.quadraticFunction.get();
+    const a = func.a;
+    const b = func.b;
+    const c = func.c;
+    let ax2 = a.mul(x).mul(x);
+    let bx = b.mul(x);
+    let solution = ax2.add(bx).sub(c);
+    // TODO: maybe threshold
+    // we are checking that x satisfies the equation ax² + bx - c = 0
+    solution.assertEquals(0);
   }
 }
 __decorate(
