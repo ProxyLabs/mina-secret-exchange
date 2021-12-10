@@ -1,25 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
-    "module": "ES2020",
-    "lib": ["dom", "esnext"],
-    "outDir": "./build",
-    "rootDir": ".",
-    "strict": true,
+    "target": "ESNext",
+    "module": "esnext",
+    "outDir": "./public",
+    "rootDir": "./src",
+    "useDefineForClassFields": false,
+    "strict": false,
+    "allowJs": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "allowJs": true,
-    "importHelpers": true,
-    "declaration": true,
-    "sourceMap": false,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
-    "isolatedModules": true
+    "emitDecoratorMetadata": true
   },
-  "include": ["./src/contract/"],
-  "exclude": ["./src/**/*.test.ts"]
+  "include": ["./src/**/*.ts"],
+  "exclude": ["src/tictactoe2.ts"]
 }
