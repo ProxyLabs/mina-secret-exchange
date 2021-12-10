@@ -17,22 +17,7 @@ import {
 async function init() {
   let [a, b, c] = generateFunctionParameters();
 
-  // TODO: remove; demo values sanity check
-  // expected: 1 and -4
-  /*   a = 1;
-  b = 3;
-  c = 4; */
-
-  console.log(`a ${a}`);
-  console.log(`b ${b}`);
-  console.log(`c ${c}`);
-
-  // num % 1 == 0 // is whole number
-
   await deployContract(a, b, c);
-  /* 
-  console.log(sanityCheck(a, b, c, -4));
-  await submitSolution(1); */
 
   let [x, y, z] = await getEquationParameters();
 
