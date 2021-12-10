@@ -3579,6 +3579,11 @@
     "is-date-object" "^1.0.1"
     "is-symbol" "^1.0.2"
 
+"esbuild-linux-64@0.14.2":
+  "integrity" "sha512-4bzMS2dNxOJoFIiHId4w+tqQzdnsch71JJV1qZnbnErSFWcR9lRgpSqWnTTFtv6XM+MvltRzSXC5wQ7AEBY6Hg=="
+  "resolved" "https://registry.npmjs.org/esbuild-linux-64/-/esbuild-linux-64-0.14.2.tgz"
+  "version" "0.14.2"
+
 "esbuild-vue@^1.0.0":
   "integrity" "sha512-5qLiVRTc/pugTT9ZeOwMTKbxdrPRiIaAW7OP+McKEBeq29xomNtB42/T7n8nackghAtxu9dWbQsRGm+8pwRhow=="
   "resolved" "https://registry.npmjs.org/esbuild-vue/-/esbuild-vue-1.0.0.tgz"
@@ -3588,11 +3593,6 @@
     "lodash.escaperegexp" "^4.1.2"
     "piscina" "^2.2.0"
     "postcss" ">=6.0.0"
-
-"esbuild-windows-64@0.14.2":
-  "integrity" "sha512-Rym6ViMNmi1E2QuQMWy0AFAfdY0wGwZD73BnzlsQBX5hZBuy/L+Speh7ucUZ16gwsrMM9v86icZUDrSN/lNBKg=="
-  "resolved" "https://registry.npmjs.org/esbuild-windows-64/-/esbuild-windows-64-0.14.2.tgz"
-  "version" "0.14.2"
 
 "esbuild@^0.14.2":
   "integrity" "sha512-l076A6o/PIgcyM24s0dWmDI/b8RQf41uWoJu9I0M71CtW/YSw5T5NUeXxs5lo2tFQD+O4CW4nBHJXx3OY5NpXg=="
@@ -5960,6 +5960,14 @@
   "resolved" "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
   "version" "2.6.2"
 
+"nice-napi@^1.0.2":
+  "integrity" "sha512-px/KnJAJZf5RuBGcfD+Sp2pAKq0ytz8j+1NehvgIGFkvtvFrDM3T8E4x/JJODXK9WZow8RRGrbA9QQ3hs+pDhA=="
+  "resolved" "https://registry.npmjs.org/nice-napi/-/nice-napi-1.0.2.tgz"
+  "version" "1.0.2"
+  dependencies:
+    "node-addon-api" "^3.0.0"
+    "node-gyp-build" "^4.2.2"
+
 "nice-try@^1.0.4":
   "integrity" "sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ=="
   "resolved" "https://registry.npmjs.org/nice-try/-/nice-try-1.0.5.tgz"
@@ -5972,10 +5980,20 @@
   dependencies:
     "lower-case" "^1.1.1"
 
+"node-addon-api@^3.0.0":
+  "integrity" "sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A=="
+  "resolved" "https://registry.npmjs.org/node-addon-api/-/node-addon-api-3.2.1.tgz"
+  "version" "3.2.1"
+
 "node-forge@^0.10.0":
   "integrity" "sha512-PPmu8eEeG9saEUvI97fm4OYxXVB6bFvyNTyiUOBichBpFG8A1Ljw3bY62+5oOjDEMHRnd0Y7HQ+x7uzxOzC6JA=="
   "resolved" "https://registry.npmjs.org/node-forge/-/node-forge-0.10.0.tgz"
   "version" "0.10.0"
+
+"node-gyp-build@^4.2.2":
+  "integrity" "sha512-iWjXZvmboq0ja1pUGULQBexmxq8CV4xBhX7VDOTbL7ZR4FOowwY/VOtRxBN/yKxmdGoIp4j5ysNT4u3S2pDQ3Q=="
+  "resolved" "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.3.0.tgz"
+  "version" "4.3.0"
 
 "node-ipc@^9.1.1":
   "integrity" "sha512-mJzaM6O3xHf9VT8BULvJSbdVbmHUKRNOH7zDDkCrA1/T+CVjq2WVIDfLt0azZRXpgArJtl3rtmEozrbXPZ9GaQ=="

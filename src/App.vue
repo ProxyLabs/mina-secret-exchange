@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./img/logo.png" /> -->
+    <h2 v-if="isDeployed">
+      {{ `${params[0]}x² + ${params[1]}x - ${params[2]}` }}
+    </h2>
+    <button @click="deploy()">ddd</button>
     <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
@@ -8,15 +11,28 @@
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
 
-import { myFunc } from "../dist/snapp/snapp.js";
+import { init } from "../dist/snapp/snapp.js";
 
 export default {
   name: "App",
   components: {
     HelloWorld,
   },
-  async mounted() {
-    await myFunc();
+  data() {
+    return {
+      params: [0, 0, 0],
+      isDeployed: false,
+      isDeploying: false,
+    };
+  },
+  methods: {
+    async deploy() {
+      this.isDeploying = true;
+      this.params = await init();
+      console.log(this.params);
+      this.isDeployed = true;
+      this.isDeploying = false;
+    },
   },
 };
 </script>
