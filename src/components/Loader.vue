@@ -20,10 +20,10 @@ export default {
   border: 16px solid #cccccc; /* Light grey */
   border-top: 16px solid #3498db; /* Blue */
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   padding: 0;
-  margin: 0;
+  margin-top: 20px;
   animation: spin 2s linear infinite;
 }
 
