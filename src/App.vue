@@ -237,7 +237,12 @@ import Snackbar from "./components/Snackbar.vue";
 import Mina from "./components/Mina.vue";
 import Proxy from "./components/Proxy.vue";
 
-import { init, submitSolution, getState } from "../dist/snapp/snapp.js";
+import {
+  init,
+  submitSolution,
+  getState,
+  swapToken,
+} from "../dist/snapp/snapp.js";
 
 export default {
   name: "App",
@@ -279,7 +284,17 @@ export default {
         this.swap = "MINA/PROXY";
       }
     },
-    swap() {},
+    async executeSwap() {
+      let acc =
+        this.selectedAccount == this.snappState.account1.address ? 0 : 1;
+      let res = await swapToken(
+        this.swap,
+        this.swapInAmount,
+        acc,
+        this.proposedSolution
+      );
+      console.log(res);
+    },
     async updateSnappState() {
       let state = await getState();
 
