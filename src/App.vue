@@ -136,18 +136,18 @@ export default {
       this.beingSubmited = false;
     },
     getEquation() {
-      let eq = `${this.params[0]}x² + ${this.params[1]}x - ${this.params[2]} = 0`;
+      let eq = `${this.params[0]}x² - ${this.params[1]}x + ${this.params[2]} = 0`;
       if (this.params[1] != 0 && this.params[2] != 0) {
-        eq = `${this.params[0]}x² + ${this.params[1]}x - ${this.params[2]} = 0`;
+        eq = `${this.params[0]}x² - ${this.params[1]}x + ${this.params[2]} = 0`;
       }
       if (this.params[1] == 0 && this.params[2] != 0) {
-        eq = `${this.params[0]}x² - ${this.params[2]} = 0`;
+        eq = `${this.params[0]}x² + ${this.params[2]} = 0`;
       }
       if (this.params[1] == 0 && this.params[2] == 0) {
         eq = `${this.params[0]}x² = 0`;
       }
       if (this.params[1] != 0 && this.params[2] == 0) {
-        eq = `${this.params[0]}x² + ${this.params[1]}x = 0`;
+        eq = `${this.params[0]}x² - ${this.params[1]}x = 0`;
       }
       return eq;
     },

@@ -1,4 +1,4 @@
-import { QuadraticFunction } from './quadratic-function.js';
+import { QuadraticFunction } from "./quadratic-function.js";
 
 import {
   SmartContract,
@@ -9,7 +9,7 @@ import {
   State,
   UInt64,
   method,
-} from 'snarkyjs';
+} from "snarkyjs";
 
 class SecretExchange extends SmartContract {
   @state(QuadraticFunction) quadraticFunction: State<QuadraticFunction>;
@@ -30,7 +30,7 @@ class SecretExchange extends SmartContract {
   }
 
   @method async verifySolution(x: Field) {
-    // a * x * x + b * x + c;
+    // a * x * x - b * x + c;
     const func = await this.quadraticFunction.get();
 
     const a = func.a;
@@ -41,10 +41,9 @@ class SecretExchange extends SmartContract {
 
     let bx = b.mul(x);
 
-    let solution = ax2.add(bx).sub(c);
+    let solution = ax2.sub(bx).add(c);
 
-    // TODO: maybe threshold
-    // we are checking that x satisfies the equation ax² + bx - c = 0
+    // we are checking that x satisfies the equation ax² - bx + c = 0
     solution.assertEquals(0);
   }
 }

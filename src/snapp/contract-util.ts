@@ -31,7 +31,7 @@ let snappAddress = snappPrivkey.toPublicKey();
 async function deployContract(a: number, b: number, c: number) {
   console.log("deploying");
   await Mina.transaction(account1, async () => {
-    const amount = UInt64.fromNumber(1000000000);
+    const amount = UInt64.fromNumber(1000000);
     const p = await Party.createSigned(account2);
     p.balance.subInPlace(amount);
 

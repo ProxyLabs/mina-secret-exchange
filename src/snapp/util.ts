@@ -7,13 +7,14 @@ function generateFunctionParameters(): [number, number, number] {
   let b = 0;
   let c = 0;
   // using module to keep the values within humand sovle-able range
-  let max = 15;
+  let max = 50;
 
   // generating fitting params
   // reason for the do while loop with root check at the end:
   // i dont want equations that have non-whole number roots
   // because that would be annoying to translate into Field elements
   // since Field elements only support whole numbers no floats afaik
+  // i also dont want equations that end up having negative roots -> annoying to confirm later on
   do {
     // generating the a,b,c parameters for the smart contract
     a = Math.floor(Math.random() * max + 1);
@@ -24,30 +25,31 @@ function generateFunctionParameters(): [number, number, number] {
     if (a == 0) {
       a = 1;
     }
-  } while (solver(a, b, c)[0] % 1 != 0 || solver(a, b, c)[1] % 1 != 0);
+  } while (
+    solver(a, b, c)[0] % 1 != 0 ||
+    solver(a, b, c)[1] % 1 != 0 ||
+    solver(a, b, c)[0] < 0 ||
+    solver(a, b, c)[1] < 0
+  );
 
   return [a, b, c];
 }
 
 function sanityCheck(a: number, b: number, c: number, x: number): boolean {
   // sanity check possible solution
-  // ax² + bx - c = 0 must satisfy equation
+  // ax² - bx + c = 0 must satisfy equation
 
-  // making sure c is really negative or zero; if it wasnt we would get into imaginary territory
-  c > 0 ? (c = c * -1) : c;
-  let solution = a * x * x + b * x + c;
-
-  // TODO: maybe a small threshold to avoid rounding errors?
+  let solution = a * (x * x) - b * x + c;
 
   return solution == 0;
 }
 
 function solver(a: number, b: number, c: number): [number, number] {
-  // ax² + bx - c = 0
-  // x = (-b) + sqrt(b² - 4ac) / 2a
+  // ax² - bx + c = 0
+  // x = (-b) - sqrt(b² - 4ac) / 2a
 
-  // making sure c is really negative or zero; if it wasnt we would get into imaginary territory
-  c > 0 ? (c = c * -1) : c;
+  // making sure b is negative to have positive roots, makes things easier later on
+  b > 0 ? (b = b * -1) : b;
 
   let x1: number;
   let x2: number;

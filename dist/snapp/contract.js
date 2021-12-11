@@ -7,8 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { QuadraticFunction } from './quadratic-function.js';
-import { SmartContract, Field, state, State, method, } from 'snarkyjs';
+import { QuadraticFunction } from "./quadratic-function.js";
+import { SmartContract, Field, state, State, method, } from "snarkyjs";
 class SecretExchange extends SmartContract {
     constructor(address, quadraticFunction, balance) {
         super(address);
@@ -27,7 +27,7 @@ class SecretExchange extends SmartContract {
         const c = func.c;
         let ax2 = a.mul(x).mul(x);
         let bx = b.mul(x);
-        let solution = ax2.add(bx).sub(c);
+        let solution = ax2.sub(bx).add(c);
         // TODO: maybe threshold
         // we are checking that x satisfies the equation ax² + bx - c = 0
         solution.assertEquals(0);
