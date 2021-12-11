@@ -28,8 +28,6 @@ async function deployContract(a, b, c) {
     });
 }
 async function submitSolution(x) {
-    let s = await getEquationParameters();
-    console.log(s);
     let result = true;
     await Mina.transaction(account1, async () => {
         await exchangeInstance.verifySolution(new Field(x));

@@ -41,18 +41,11 @@
         </button>
       </div>
       <div v-if="atPage == 1">
-        <h2
-          style="
-            border: 2px red dotted;
-            margin-left: 40%;
-            margin-right: 40%;
-            margin-top: 25px;
-          "
-        >
-          <h5 style="margin-top: 5px">Here is your equation:</h5>
+        <h2 style="border: 2px red dotted; margin-left: 40%; margin-right: 40%">
+          <h5 style="margin: 5px">Here is your equation:</h5>
           {{ getEquation() }}
         </h2>
-        <h5 style="margin-top: 10px">
+        <h5 style="margin-top: 0px">
           Please provide one possible solution to this equation to proceed
         </h5>
         <Loader
@@ -82,7 +75,7 @@
             <button
               v-if="showHint"
               class="hint-btn"
-              style="margin-top: 12px"
+              style="margin-top: 15px"
               @click="showHint = false"
             >
               <span>Hide Hint</span>
@@ -94,7 +87,7 @@
             <br />
             <button
               class="submit-btn"
-              style="margin-top: 35px"
+              style="margin-top: 20px"
               @click="submitSolution()"
             >
               <span>Submit</span>
@@ -240,6 +233,13 @@ export default {
   border-radius: 5px;
   box-shadow: 4px 4px rgb(121, 121, 121);
   margin-top: 20px;
+}
+
+.deploy-btn:hover,
+.submit-btn:hover,
+.hint-btn:hover,
+.continue-btn:hover {
+  border: solid black 1px;
 }
 
 .submit-btn span {
