@@ -8,10 +8,10 @@ import {
   Party,
   PublicKey,
   UInt32,
-} from 'snarkyjs';
+} from "snarkyjs";
 
-import { SecretExchange } from './contract.js';
-import { QuadraticFunction } from './quadratic-function.js';
+import { SecretExchange } from "./contract.js";
+import { QuadraticFunction } from "./quadratic-function.js";
 
 await isReady;
 
@@ -27,7 +27,7 @@ let snappPrivkey = PrivateKey.random();
 let snappAddress = snappPrivkey.toPublicKey();
 
 async function deployContract(a: number, b: number, c: number) {
-  console.log('deploying');
+  console.log("deploying");
   await Mina.transaction(account1, async () => {
     const amount = UInt64.fromNumber(1000000000);
     const p = await Party.createSigned(account2);
@@ -70,3 +70,4 @@ async function getEquationParameters(): Promise<[number, number, number]> {
 }
 
 export { deployContract, getEquationParameters, submitSolution };
+shutdown();

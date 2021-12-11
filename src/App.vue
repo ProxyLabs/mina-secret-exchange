@@ -1,22 +1,22 @@
 <template>
   <div id="app">
+    <Loader />
     <h2 v-if="isDeployed">
       {{ `${params[0]}x² + ${params[1]}x - ${params[2]}` }}
     </h2>
     <button @click="deploy()">ddd</button>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Loader from "./components/Loader.vue";
 
 import { init } from "../dist/snapp/snapp.js";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    Loader,
   },
   data() {
     return {

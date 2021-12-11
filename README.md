@@ -17,6 +17,11 @@ The root(s) of `2x² + 1x - 1 = 0` would be `x_1 = -1`and `x_2 = 1/2`.
 
 I will also provide a plot of the graph in the user interface to make it a little easier (if you eyes are good enough to read the roots off the plot ;>).
 
+# Features
+
+- user friendly frontend with a bunch of possibilities
+- having to provide one of n solutions before you can access functionalities of the smart contract
+
 # Usage
 
 TODO: do usage; add installation guide

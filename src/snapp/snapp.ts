@@ -14,11 +14,14 @@ import {
   submitSolution,
 } from "./contract-util.js";
 
+let ContractUtils;
+
 export { init };
 
 async function init(): Promise<[number, number, number]> {
   let [a, b, c] = generateFunctionParameters();
 
+  ContractUtils = await import("./contract-util.js");
   //await deployContract(a, b, c);
 
   /*   let [x, y, z] = await getEquationParameters();
@@ -92,5 +95,3 @@ function solver(a: number, b: number, c: number): [number, number] {
 
   return [x1, x2];
 }
-
-shutdown();

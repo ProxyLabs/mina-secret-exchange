@@ -1,6 +1,6 @@
-import { isReady, Field, Mina, PrivateKey, UInt64, Party, } from 'snarkyjs';
-import { SecretExchange } from './contract.js';
-import { QuadraticFunction } from './quadratic-function.js';
+import { isReady, shutdown, Field, Mina, PrivateKey, UInt64, Party, } from "snarkyjs";
+import { SecretExchange } from "./contract.js";
+import { QuadraticFunction } from "./quadratic-function.js";
 await isReady;
 let quadraticFunction;
 let exchangeInstance;
@@ -11,7 +11,7 @@ const account2 = Local.testAccounts[1].privateKey;
 let snappPrivkey = PrivateKey.random();
 let snappAddress = snappPrivkey.toPublicKey();
 async function deployContract(a, b, c) {
-    console.log('deploying');
+    console.log("deploying");
     await Mina.transaction(account1, async () => {
         const amount = UInt64.fromNumber(1000000000);
         const p = await Party.createSigned(account2);
@@ -45,3 +45,4 @@ async function getEquationParameters() {
     ];
 }
 export { deployContract, getEquationParameters, submitSolution };
+shutdown();

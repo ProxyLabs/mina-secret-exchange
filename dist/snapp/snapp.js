@@ -1,7 +1,8 @@
-import { shutdown, } from "snarkyjs";
+let ContractUtils;
 export { init };
 async function init() {
     let [a, b, c] = generateFunctionParameters();
+    ContractUtils = await import("./contract-util.js");
     //await deployContract(a, b, c);
     /*   let [x, y, z] = await getEquationParameters();
      */
@@ -58,4 +59,3 @@ function solver(a, b, c) {
     }
     return [x1, x2];
 }
-shutdown();
