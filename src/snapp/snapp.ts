@@ -16,7 +16,7 @@ import {
 
 import { generateFunctionParameters, solver } from "./util.js";
 
-export { init, submitSolution };
+export { init, submitSolution, getState };
 
 let ContractUtils;
 
@@ -27,6 +27,11 @@ async function init(max): Promise<[number, number, number]> {
 
   await ContractUtils.deployContract(a, b, c);
 
+  /*   let sn: SnappState = {
+    accounts: [ContractUtils.account1, ContractUtils.account2],
+    balanceMina: 
+  };
+ */
   /*   let [x, y, z] = await getEquationParameters();
    */
   let [x1, x2] = solver(a, b, c);
@@ -39,4 +44,9 @@ async function init(max): Promise<[number, number, number]> {
 
 async function submitSolution(x: number): Promise<boolean> {
   return await ContractUtils.submitSolution(x);
+}
+
+async function getState(): Promise<any> {
+  let res = await ContractUtils.fetchAccountStates();
+  return res;
 }
