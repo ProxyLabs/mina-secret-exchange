@@ -90,12 +90,12 @@
           </div>
           <div class="right" style="width: 50%">
             <h3>Possible solution</h3>
-            <input type="text" class="submission" />
+            <input type="text" v-model="proposedSolution" class="submission" />
             <br />
             <button
               class="submit-btn"
               style="margin-top: 35px"
-              @click="beingSubmited = true"
+              @click="submitSolution()"
             >
               <span>Submit</span>
             </button>
@@ -114,7 +114,7 @@ import Equation from "./components/Equation.vue";
 import ProxyLabsLogo from "./components/ProxyLabsLogo.vue";
 import GithubLogo from "./components/GithubLogo.vue";
 
-import { init } from "../dist/snapp/snapp.js";
+import { init, submitSolution } from "../dist/snapp/snapp.js";
 
 export default {
   name: "App",
@@ -131,10 +131,17 @@ export default {
       deploying: false,
       showHint: false,
       beingSubmited: false,
+      proposedSolution: 0,
       atPage: 0,
     };
   },
   methods: {
+    async submitSolution() {
+      this.beingSubmited = true;
+      let res = await submitSolution(this.proposedSolution);
+      console.log(res);
+      this.beingSubmited = false;
+    },
     getEquation() {
       let eq = `${this.params[0]}x² + ${this.params[1]}x - ${this.params[2]} = 0`;
       if (this.params[1] != 0 && this.params[2] != 0) {

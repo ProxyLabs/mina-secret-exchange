@@ -13,6 +13,8 @@ import {
 import { SecretExchange } from "./contract.js";
 import { QuadraticFunction } from "./quadratic-function.js";
 
+export { deployContract, getEquationParameters, submitSolution };
+
 await isReady;
 
 let quadraticFunction: QuadraticFunction;
@@ -49,7 +51,8 @@ async function deployContract(a: number, b: number, c: number) {
     });
 }
 
-async function submitSolution(x: number) {
+async function submitSolution(x: number): Promise<boolean> {
+  let result = true;
   await Mina.transaction(account1, async () => {
     await exchangeInstance.verifySolution(new Field(x));
   })
@@ -57,7 +60,10 @@ async function submitSolution(x: number) {
     .wait()
     .catch((e) => {
       console.log(e);
+      result = false;
     });
+
+  return result;
 }
 
 async function getEquationParameters(): Promise<[number, number, number]> {
@@ -68,6 +74,3 @@ async function getEquationParameters(): Promise<[number, number, number]> {
     parseInt(snappState[2].toString()),
   ];
 }
-
-export { deployContract, getEquationParameters, submitSolution };
-shutdown();

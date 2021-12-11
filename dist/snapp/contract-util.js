@@ -1,6 +1,7 @@
-import { isReady, shutdown, Field, Mina, PrivateKey, UInt64, Party, } from "snarkyjs";
+import { isReady, Field, Mina, PrivateKey, UInt64, Party, } from "snarkyjs";
 import { SecretExchange } from "./contract.js";
 import { QuadraticFunction } from "./quadratic-function.js";
+export { deployContract, getEquationParameters, submitSolution };
 await isReady;
 let quadraticFunction;
 let exchangeInstance;
@@ -27,6 +28,9 @@ async function deployContract(a, b, c) {
     });
 }
 async function submitSolution(x) {
+    let s = await getEquationParameters();
+    console.log(s);
+    let result = true;
     await Mina.transaction(account1, async () => {
         await exchangeInstance.verifySolution(new Field(x));
     })
@@ -34,7 +38,9 @@ async function submitSolution(x) {
         .wait()
         .catch((e) => {
         console.log(e);
+        result = false;
     });
+    return result;
 }
 async function getEquationParameters() {
     let snappState = (await Mina.getAccount(snappAddress)).snapp.appState;
@@ -44,5 +50,3 @@ async function getEquationParameters() {
         parseInt(snappState[2].toString()),
     ];
 }
-export { deployContract, getEquationParameters, submitSolution };
-shutdown();
