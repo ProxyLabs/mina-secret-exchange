@@ -20,8 +20,8 @@ export { init, submitSolution };
 
 let ContractUtils;
 
-async function init(): Promise<[number, number, number]> {
-  let [a, b, c] = generateFunctionParameters();
+async function init(max): Promise<[number, number, number]> {
+  let [a, b, c] = generateFunctionParameters(max);
 
   ContractUtils = await import("./contract-util.js");
 

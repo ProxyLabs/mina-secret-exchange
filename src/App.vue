@@ -33,6 +33,24 @@
           <h5 style="margin: 5px">There you go - here is your equation:</h5>
           {{ getEquation() }}
         </h2>
+        <div
+          :style="!isDeployed ? 'visibility: visible;' : 'visibility: hidden;'"
+        >
+          <h3>Possible difficulty of equation</h3>
+          <div class="slidecontainer">
+            <span>EASY</span>
+            <input
+              v-model="difficulty"
+              type="range"
+              min="1"
+              max="80"
+              value="40"
+              class="slider"
+            />
+            <span>HARD</span>
+          </div>
+        </div>
+
         <button v-if="!isDeployed" class="deploy-btn" @click="deploy()">
           <span>Deploy the contract</span>
         </button>
@@ -124,6 +142,7 @@ export default {
   data() {
     return {
       params: [0, 0, 0],
+      difficulty: 40,
       isDeployed: false,
       deploying: false,
       showHint: false,
@@ -185,7 +204,7 @@ export default {
     },
     async deploy() {
       this.deploying = true;
-      this.params = await init();
+      this.params = await init(this.difficulty);
 
       this.setSnackbar("info", "Contract deployed!");
 
@@ -333,5 +352,35 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 5px;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 300px;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #02d6cc;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #02d6cc;
+  cursor: pointer;
 }
 </style>

@@ -6,8 +6,8 @@
 import { generateFunctionParameters, solver } from "./util.js";
 export { init, submitSolution };
 let ContractUtils;
-async function init() {
-    let [a, b, c] = generateFunctionParameters();
+async function init(max) {
+    let [a, b, c] = generateFunctionParameters(max);
     ContractUtils = await import("./contract-util.js");
     await ContractUtils.deployContract(a, b, c);
     /*   let [x, y, z] = await getEquationParameters();
