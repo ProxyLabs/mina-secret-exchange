@@ -20,7 +20,7 @@ class SecretExchange extends SmartContract {
         //this.quadraticFunction.set(new QuadraticFunction(a, b, c));
     }
     async verifySolution(x) {
-        // a * x * x + b * x + c;
+        // a * x * x - b * x + c;
         const func = await this.quadraticFunction.get();
         const a = func.a;
         const b = func.b;
@@ -28,8 +28,7 @@ class SecretExchange extends SmartContract {
         let ax2 = a.mul(x).mul(x);
         let bx = b.mul(x);
         let solution = ax2.sub(bx).add(c);
-        // TODO: maybe threshold
-        // we are checking that x satisfies the equation ax² + bx - c = 0
+        // we are checking that x satisfies the equation ax² - bx + c = 0
         solution.assertEquals(0);
     }
 }

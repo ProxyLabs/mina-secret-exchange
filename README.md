@@ -22,6 +22,14 @@ I might also provide a plotted graph and maybe some hints on to solve it (if you
 - user friendly frontend with a bunch of possibilities
 - having to provide one of n solutions before you can access functionalities of the smart contract
 
+# My Goal
+
+I wanted to combine the features of a user facing zk-powered smart contract. I achieved this by combining the following features
+
+- a simple user interface where users can actually interqact with the smart contract the way they are used to from other platforms like Ethereum
+- the power of zk proofs provided by Mina and SnarkyJS
+- something every smart contract users knows about: (d)Exchanges and some (even tho only theoretical and simulated) popular DEFI features like swapping token
+
 # Usage
 
 TODO: do usage; add installation guide

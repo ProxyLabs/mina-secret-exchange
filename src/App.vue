@@ -83,7 +83,8 @@
           </div>
           <div class="right" style="width: 50%">
             <h3>Possible solution</h3>
-            <input type="text" v-model="proposedSolution" class="submission" />
+            <span style="font-size: 3rem">x = </span
+            ><input type="text" v-model="proposedSolution" class="submission" />
             <br />
             <button
               class="submit-btn"
