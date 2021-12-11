@@ -75,7 +75,7 @@
             <button
               v-if="showHint"
               class="hint-btn"
-              style="margin-top: 15px"
+              style="margin-top: 20px"
               @click="showHint = false"
             >
               <span>Hide Hint</span>
@@ -88,7 +88,7 @@
             <br />
             <button
               class="submit-btn"
-              style="margin-top: 20px"
+              style="margin-top: 10px"
               @click="submitSolution()"
             >
               <span>Submit</span>
@@ -205,8 +205,8 @@ export default {
 }
 
 .header {
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 10%;
+  margin-right: 10%;
   display: flex;
   justify-content: space-between;
 }
