@@ -98,6 +98,7 @@
         </div>
       </div>
     </div>
+    <Snackbar v-if="showSnackbar" :snack="snack" />
   </div>
 </template>
 
@@ -107,6 +108,7 @@ import Equation from "./components/Equation.vue";
 
 import ProxyLabsLogo from "./components/ProxyLabsLogo.vue";
 import GithubLogo from "./components/GithubLogo.vue";
+import Snackbar from "./components/Snackbar.vue";
 
 import { init, submitSolution } from "../dist/snapp/snapp.js";
 
@@ -117,6 +119,7 @@ export default {
     Equation,
     GithubLogo,
     ProxyLabsLogo,
+    Snackbar,
   },
   data() {
     return {
@@ -127,13 +130,38 @@ export default {
       beingSubmited: false,
       proposedSolution: 0,
       atPage: 0,
+      showSnackbar: false,
+      snack: {
+        type: "failure",
+        message: "Request failed",
+      },
     };
   },
   methods: {
+    setSnackbar(type, msg) {
+      this.showSnackbar = false;
+      this.snack.type = type;
+      this.snack.message = msg;
+      this.showSnackbar = true;
+      setTimeout(() => {
+        this.showSnackbar = false;
+      }, 3500);
+    },
     async submitSolution() {
       this.beingSubmited = true;
       let res = await submitSolution(this.proposedSolution);
-      console.log(res);
+
+      if (res) {
+        this.setSnackbar(
+          "success",
+          "Congratz! You found one valid solution to the equation. Please proceed"
+        );
+      } else {
+        this.setSnackbar(
+          "failure",
+          "Failure. Looks like the provided solution doesn't work!"
+        );
+      }
       this.beingSubmited = false;
     },
     getEquation() {
@@ -158,6 +186,10 @@ export default {
     async deploy() {
       this.deploying = true;
       this.params = await init();
+
+      this.setSnackbar("info", "Contract deployed!");
+
+      this.beingSubmited = false;
       this.isDeployed = true;
       this.deploying = false;
     },
