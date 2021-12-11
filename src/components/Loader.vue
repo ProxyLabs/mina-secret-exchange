@@ -1,4 +1,9 @@
-<template><div class="loader"></div></template>
+<template>
+  <div>
+    <div class="loader"></div>
+    <span>loading..</span>
+  </div>
+</template>
 
 <script>
 export default {
@@ -7,12 +12,18 @@ export default {
 </script>
 <style scoped>
 .loader {
-  position: absolute;
-  border: 16px solid #f3f3f3; /* Light grey */
+  filter: none !important;
+  z-index: 5;
+  border: solid 2px red;
+  position: relative;
+  left: calc(50% - 40px);
+  border: 16px solid #cccccc; /* Light grey */
   border-top: 16px solid #3498db; /* Blue */
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
   animation: spin 2s linear infinite;
 }
 
