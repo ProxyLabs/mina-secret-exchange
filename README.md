@@ -17,7 +17,7 @@ Note that i generated the params for the equation based on a handful of checks s
 
 Only after successfully solving an equation, let's say `11x² - 44x + 44 = 0`, we will get access to the exhange and be able to trade something. See the solution to the equation as a secret key you need to continue and you dont want to share with anyone! Imagine solving the riemann hypothesis and proofing that you have the solution without having to reveal it! Awesome, right? No work stealing ;)
 
-The root(s) of `11x² - 44x + 44 = 0 would be `x_1 = 2`and `x_2 = 2`.
+The root(s) of `11x² - 44x + 44 = 0 would be `x_1 = 2`and`x_2 = 2`.
 
 I might also provide a plotted graph and maybe some hints on to solve it (if you eyes are good enough to read the roots off the plot ;>).
 
@@ -36,4 +36,32 @@ I wanted to combine the features of a user facing zk-powered smart contract. I a
 
 # Usage
 
-TODO: do usage; add installation guide
+`package.json` includes scripts for building both the SnarkyJS snapp and the vue frontend
+
+Running
+
+```
+npx tsc
+```
+
+compiles the smart contract into `./dist`
+
+Running
+
+```
+ node run esbuild
+```
+
+builds the vue frontend in `./public`
+
+```
+npm run serve
+```
+
+serves the frontend under localhost:3000
+
+or all in one:
+
+```
+npn run build
+```
