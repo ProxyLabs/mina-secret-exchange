@@ -10,6 +10,8 @@ A demo version will be accessible to everyone, without having to host it or use 
 
 ### Explanation
 
+`Both the frontend and the snapp backend are only a rough proof of concept and have loads of room for improvements`
+
 The secret exchange allows users to buy imaginary tokens (tokens aren't implemented, only simulated) after successfully providing the solution to a series of math problems while keeping the solution itself secure and private, not exposing it to the network. An exchange to which only math-nerds have access!
 
 The three parameters `a`, `b`,`c` for the equation `ax² - bx + c` will be pseudo randomly generated upon contract deployment.
@@ -28,11 +30,12 @@ I might also provide a plotted graph and maybe some hints on to solve it (if you
 
 # My Goal
 
-I wanted to combine the features of a user facing zk-powered smart contract. I achieved this by combining the following features
+I wanted to combine the features of a user facing zk-powered smart contract.
 
 - a simple user interface where users can actually interqact with the smart contract the way they are used to from other platforms like Ethereum
-- the power of zk proofs provided by Mina and SnarkyJS
+- the power of zk proofs provided by Mina and SnarkyJS in the form of solving an equation before users can access the rest of the smart contract without revealing their solution
 - something every smart contract users knows about: (d)Exchanges and some (even tho only theoretical and simulated) popular DEFI features like swapping token
+- still many features planned
 
 # Usage
 
