@@ -44,7 +44,7 @@
               type="range"
               min="3"
               max="80"
-              value="55"
+              value="41"
               class="slider"
             />
             <span>HARD</span>
@@ -140,27 +140,106 @@
               </option>
             </select>
             <div style="text-align: left">
-              <h4>Equation: {{ getEquation() }}</h4>
-              <h4>The solution to the equation: x = {{ proposedSolution }}</h4>
+              <div class="content" sltye="margin-left: 10%;">
+                <h4>
+                  Equation:
+                  <span style="color: rgb(250, 150, 230); font-weight: 700">{{
+                    getEquation()
+                  }}</span>
+                  || Your solution:
+                  <span style="color: rgb(250, 150, 230); font-weight: 700"
+                    >x = {{ proposedSolution }}</span
+                  >
+                </h4>
 
-              <h4>
-                Balance $MINA:
-                {{
-                  selectedAccount == 0
-                    ? snappState.account1.balance / 1000000
-                    : snappState.account2.balance / 1000000
-                }}
-              </h4>
+                <h4>
+                  Balance $MINA:
+                  {{
+                    selectedAccount == 0
+                      ? snappState.account1.balance / 1000000
+                      : snappState.account2.balance / 1000000
+                  }}
+                </h4>
 
-              <h4>
-                Balance $TOKEN:
-                {{
-                  selectedAccount == 0
-                    ? snappState.account1.balanceToken / 1000000
-                    : snappState.account2.balanceToken / 1000000
-                }}
-              </h4>
-              {{ snappState.snapp }}
+                <h4>
+                  Balance $TOKEN:
+                  {{
+                    selectedAccount == 0
+                      ? snappState.account1.balanceToken / 1000000
+                      : snappState.account2.balanceToken / 1000000
+                  }}
+                </h4>
+                <hr />
+                <h4>
+                  Contract Balance $MINA:
+                  {{ snappState.snapp.balance / 1000000 }}
+                </h4>
+                <h4>
+                  Contract Balance $TOKEN:
+                  {{ snappState.snapp.balanceToken / 1000000 }}
+                </h4>
+                <hr />
+                <h3>Transactions</h3>
+                <table>
+                  <tr>
+                    <th>Direction</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                  </tr>
+                  <template v-if="selectedAccount == 0">
+                    <tr v-for="(tx, t) in transactionsAccount1" :key="t">
+                      <template v-if="tx.direction == 'out'">
+                        <td style="color: red">OUTGOING</td>
+                        <td style="color: red; margin-bottom: 2px">
+                          {{ tx.amount }}
+                        </td>
+                        <td style="color: red; margin-bottom: 2px">
+                          {{ tx.type }}
+                        </td>
+                      </template>
+                      <template v-if="tx.direction == 'in'">
+                        <td style="color: green">OUTGOING</td>
+                        <td style="color: green; margin-bottom: 2px">
+                          {{ tx.amount }}
+                        </td>
+                        <td style="color: green; margin-bottom: 2px">
+                          {{ tx.type }}
+                        </td>
+                      </template>
+                    </tr>
+                  </template>
+                  <template v-else>
+                    <tr v-for="(tx, t) in transactionsAccount2" :key="t">
+                      <template v-if="tx.direction == 'out'">
+                        <td style="color: red">
+                          <span style="margin-bottom: 3px">OUTGOING</span>
+                        </td>
+                        <td style="color: red">
+                          <span style="margin-bottom: 3px">{{
+                            tx.amount
+                          }}</span>
+                        </td>
+                        <td style="color: red; margin-bottom: 2px">
+                          <span style="margin-bottom: 3px">{{ tx.type }}</span>
+                        </td>
+                      </template>
+                      <template v-if="tx.direction == 'in'">
+                        <td style="color: green">
+                          <span style="margin-bottom: 3px">INCOMING</span>
+                        </td>
+                        <td style="color: green; margin-bottom: 2px">
+                          <span style="margin-bottom: 3px">{{
+                            tx.amount
+                          }}</span>
+                        </td>
+                        <td style="color: green; margin-bottom: 2px">
+                          <span style="margin-bottom: 3px">{{ tx.type }}</span>
+                        </td>
+                      </template>
+                    </tr>
+                  </template>
+                </table>
+              </div>
             </div>
           </div>
           <div class="right" style="width: 50%">
@@ -253,10 +332,12 @@ export default {
   data() {
     return {
       swap: "MINA/PROXY",
+      transactionsAccount1: [],
+      transactionsAccount2: [],
       swapInAmount: 0,
       switchAccount: "",
       params: [0, 0, 0],
-      difficulty: 55,
+      difficulty: 41,
       isDeployed: false,
       deploying: false,
       showHint: false,
@@ -294,6 +375,38 @@ export default {
             this.swap == "MINA/PROXY" ? "MINA" : "PROXY"
           } for $${this.swap == "MINA/PROXY" ? "PROXY" : "MINA"}`
         );
+
+        if (acc == 0) {
+          this.transactionsAccount1.push({
+            direction: "out",
+            amount: `  -${this.swapInAmount} $${
+              this.swap == "MINA/PROXY" ? "MINA" : "PROXY"
+            }`,
+            type: "swap",
+          });
+          this.transactionsAccount1.push({
+            direction: "in",
+            amount: `  +${this.swapInAmount} $${
+              this.swap == "MINA/PROXY" ? "PROXY" : "MINA"
+            }`,
+            type: "swap",
+          });
+        } else {
+          this.transactionsAccount2.push({
+            direction: "out",
+            amount: `  -${this.swapInAmount} $${
+              this.swap == "MINA/PROXY" ? "MINA" : "PROXY"
+            }`,
+            type: "swap",
+          });
+          this.transactionsAccount2.push({
+            direction: "in",
+            amount: `  +${this.swapInAmount} $${
+              this.swap == "MINA/PROXY" ? "PROXY" : "MINA"
+            }`,
+            type: "swap",
+          });
+        }
       } else {
         this.setSnackbar("failure", "Swapping failed.");
       }
@@ -395,6 +508,11 @@ export default {
   font-family: "Inconsolata", sans-serif;
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
 .swap-input {
   border: none;
   font-size: 3rem;
@@ -409,7 +527,7 @@ export default {
   margin-left: 100px;
   border-radius: 15px;
   border: solid 2px black;
-  background-color: rgb(223, 223, 223);
+  background-color: rgb(231, 225, 210);
 }
 .swapBoxes {
   height: 140px;
