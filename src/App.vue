@@ -42,9 +42,9 @@
             <input
               v-model="difficulty"
               type="range"
-              min="1"
+              min="3"
               max="80"
-              value="40"
+              value="55"
               class="slider"
             />
             <span>HARD</span>
@@ -256,7 +256,7 @@ export default {
       swapInAmount: 0,
       switchAccount: "",
       params: [0, 0, 0],
-      difficulty: 40,
+      difficulty: 55,
       isDeployed: false,
       deploying: false,
       showHint: false,
