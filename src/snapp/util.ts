@@ -2,6 +2,10 @@
 
 export { generateFunctionParameters, solver };
 
+/**
+ * Generates parameters for equation ax² - bx + c based on a handful of checks
+ * @returns Return the parameters a, b and c
+ */
 function generateFunctionParameters(max: number): [number, number, number] {
   let a = 0;
   let b = 0;
@@ -35,6 +39,10 @@ function generateFunctionParameters(max: number): [number, number, number] {
   return [a, b, c];
 }
 
+/**
+ * Checks if x is a solution to an equation with parameters a, b and c
+ * @returns Return wheter x is a valid solution
+ */
 function sanityCheck(a: number, b: number, c: number, x: number): boolean {
   // sanity check possible solution
   // ax² - bx + c = 0 must satisfy equation
@@ -44,6 +52,10 @@ function sanityCheck(a: number, b: number, c: number, x: number): boolean {
   return solution == 0;
 }
 
+/**
+ * Solves the equation with parameters a, b and c
+ * @returns Return all solutions
+ */
 function solver(a: number, b: number, c: number): [number, number] {
   // ax² - bx + c = 0
   // x = (-b) - sqrt(b² - 4ac) / 2a

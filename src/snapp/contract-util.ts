@@ -27,6 +27,7 @@ export {
 
 await isReady;
 
+// interfaces for account state, balance etc
 interface SnappAccount {
   address: String;
   balance: String;
@@ -43,6 +44,7 @@ interface AccountState {
   snapp: SnappAccount;
 }
 
+// setup
 let quadraticFunction: QuadraticFunction;
 let exchangeInstance: SecretExchange;
 
@@ -54,6 +56,12 @@ const accounts = [account1, account2];
 let snappPrivkey = PrivateKey.random();
 let snappAddress = snappPrivkey.toPublicKey();
 
+/**
+ * Deploys a contract with equation params a, b and c
+ * @param a a
+ * @param b b
+ * @param c c
+ */
 async function deployContract(a: number, b: number, c: number) {
   console.log("deploying");
   await Mina.transaction(account1, async () => {
@@ -76,6 +84,11 @@ async function deployContract(a: number, b: number, c: number) {
     });
 }
 
+/**
+ * Submits solution to the contract
+ * @param x Solution to verify
+ * @returns Returns a boolean wheter or not verification was sucessful
+ */
 async function submitSolution(x: number): Promise<boolean> {
   let result = true;
   await Mina.transaction(account1, async () => {
@@ -92,6 +105,10 @@ async function submitSolution(x: number): Promise<boolean> {
   return result;
 }
 
+/**
+ * Gets the equation parameters a,b and c
+ * @returns Returns the equation parameters a,b and c
+ */
 async function getEquationParameters(): Promise<[number, number, number]> {
   let snappState = (await Mina.getAccount(snappAddress)).snapp.appState;
   return [
@@ -101,6 +118,12 @@ async function getEquationParameters(): Promise<[number, number, number]> {
   ];
 }
 
+/**
+ * Swaps  MINA for a token
+ * @param amount Amount to swap
+ * @param x Solution to the equation
+ * @param acc Account to trade with
+ */
 async function swapForMina(
   amount: number,
   x: number,
@@ -131,6 +154,13 @@ async function swapForMina(
 
   return result;
 }
+
+/**
+ * Swaps Token for MINA
+ * @param amount Amount to swap
+ * @param x Solution to the equation
+ * @param acc Account to trade with
+ */
 async function swapForToken(
   amount: number,
   x: number,
@@ -163,6 +193,10 @@ async function swapForToken(
   return result;
 }
 
+/**
+ * Fetches the account status
+ * @returns Returns AccountState
+ */
 async function fetchAccountStates(): Promise<AccountState> {
   const a1 = await Mina.getAccount(accounts[0].toPublicKey());
   const a2 = await Mina.getAccount(accounts[1].toPublicKey());

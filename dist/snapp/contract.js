@@ -9,9 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { QuadraticFunction } from "./quadratic-function.js";
 import { SmartContract, PublicKey, Field, state, State, UInt64, method, Bool, Signature, } from "snarkyjs";
-function containsPublicKey(xs, x) {
-    return xs.map((y) => x.equals(y)).reduce(Bool.or);
-}
+export { SecretExchange };
+// the contract
 class SecretExchange extends SmartContract {
     constructor(address, quadraticFunction, balance, owners) {
         super(address);
@@ -44,8 +43,8 @@ class SecretExchange extends SmartContract {
         let balanceP1 = await this.balanceP1.get();
         let balanceP2 = await this.balanceP2.get();
         // making sure the right account is requesting a swap
-        // TODO: Change signature acceptance
-        s.verify(pKey, Field(1).toFields()).assertEquals(true);
+        const nonce = await this.nonce;
+        s.verify(pKey, nonce.toFields()).assertEquals(true);
         if (pKey.equals(this.owners[0]).toBoolean()) {
             // Making sure token balance is enough so it can be swapped for mina
             // finally setting the new token balance
@@ -78,8 +77,8 @@ class SecretExchange extends SmartContract {
         // making sure key is inside of owners list
         containsPublicKey(this.owners, pKey).assertEquals(true);
         // making sure the right account is requesting a swap
-        // TODO: Change signature acceptance
-        s.verify(pKey, Field(1).toFields()).assertEquals(true);
+        const nonce = await this.nonce;
+        s.verify(pKey, nonce.toFields()).assertEquals(true);
         let tokenSupply = await this.tokenBalance.get();
         // making sure we still have enough toklen in our reserve
         tokenSupply.assertGte(amount.value);
@@ -150,4 +149,6 @@ __decorate([
     __metadata("design:paramtypes", [Field, PublicKey]),
     __metadata("design:returntype", Promise)
 ], SecretExchange.prototype, "verifySolution", null);
-export { SecretExchange };
+function containsPublicKey(xs, x) {
+    return xs.map((y) => x.equals(y)).reduce(Bool.or);
+}

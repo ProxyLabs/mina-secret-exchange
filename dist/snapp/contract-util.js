@@ -3,6 +3,7 @@ import { SecretExchange } from "./contract.js";
 import { QuadraticFunction } from "./quadratic-function.js";
 export { deployContract, getEquationParameters, submitSolution, accounts, fetchAccountStates, swapForMina, swapForToken, };
 await isReady;
+// setup
 let quadraticFunction;
 let exchangeInstance;
 const Local = Mina.LocalBlockchain();
@@ -12,6 +13,7 @@ let account2 = Local.testAccounts[1].privateKey;
 const accounts = [account1, account2];
 let snappPrivkey = PrivateKey.random();
 let snappAddress = snappPrivkey.toPublicKey();
+// all functions that somehow interfact with the smart contract/blockchain
 async function deployContract(a, b, c) {
     console.log("deploying");
     await Mina.transaction(account1, async () => {
@@ -52,9 +54,10 @@ async function getEquationParameters() {
 async function swapForMina(amount, x, acc) {
     let account;
     account = acc == 0 ? account1 : account2;
+    const { nonce: snappNonce } = await Mina.getAccount(snappAddress);
     let result = true;
     await Mina.transaction(account, async () => {
-        await exchangeInstance.swapForMina(UInt64.fromNumber(amount), new Field(x), Signature.create(account, Field(1).toFields()), account.toPublicKey());
+        await exchangeInstance.swapForMina(UInt64.fromNumber(amount), new Field(x), Signature.create(account, snappNonce.toFields()), account.toPublicKey());
         // claiming mina
         Party.createUnsigned(account.toPublicKey()).balance.addInPlace(UInt64.fromNumber(amount));
     })
@@ -69,12 +72,13 @@ async function swapForMina(amount, x, acc) {
 async function swapForToken(amount, x, acc) {
     let account;
     account = acc == 0 ? account1 : account2;
+    const { nonce: snappNonce } = await Mina.getAccount(snappAddress);
     let result = true;
     await Mina.transaction(account, async () => {
         const a = UInt64.fromNumber(amount);
         const p = await Party.createUnsigned(account.toPublicKey());
         p.balance.subInPlace(a);
-        await exchangeInstance.swapForToken(UInt64.fromNumber(amount), new Field(x), Signature.create(account, Field(1).toFields()), account.toPublicKey());
+        await exchangeInstance.swapForToken(UInt64.fromNumber(amount), new Field(x), Signature.create(account, snappNonce.toFields()), account.toPublicKey());
     })
         .send()
         .wait()

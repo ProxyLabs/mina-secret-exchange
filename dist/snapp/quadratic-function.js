@@ -7,7 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { CircuitValue, Field, prop, } from 'snarkyjs';
+import { CircuitValue, Field, prop, } from "snarkyjs";
+export { QuadraticFunction };
 class QuadraticFunction extends CircuitValue {
     constructor(a, b, c) {
         super();
@@ -28,4 +29,3 @@ __decorate([
     prop,
     __metadata("design:type", Field)
 ], QuadraticFunction.prototype, "c", void 0);
-export { QuadraticFunction };

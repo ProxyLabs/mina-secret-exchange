@@ -16,10 +16,9 @@ import {
   UInt32,
 } from "snarkyjs";
 
-function containsPublicKey(xs: Array<PublicKey>, x: PublicKey): Bool {
-  return xs.map((y) => x.equals(y)).reduce(Bool.or);
-}
+export { SecretExchange };
 
+// the contract
 class SecretExchange extends SmartContract {
   @state(QuadraticFunction) quadraticFunction: State<QuadraticFunction>;
 
@@ -179,4 +178,6 @@ class SecretExchange extends SmartContract {
   }
 }
 
-export { SecretExchange };
+function containsPublicKey(xs: Array<PublicKey>, x: PublicKey): Bool {
+  return xs.map((y) => x.equals(y)).reduce(Bool.or);
+}

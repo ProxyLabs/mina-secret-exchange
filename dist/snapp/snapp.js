@@ -1,11 +1,8 @@
-/* import {
-  deployContract,
-  getEquationParameters,
-  submitSolution,
-} from "./contract-util.js"; */
 import { generateFunctionParameters, solver } from "./util.js";
 export { init, submitSolution, getState, swapToken, deployDebugContract };
+// dynamic import so page doesnt freeze at startup
 let ContractUtils;
+// deploying a debug contract
 async function deployDebugContract() {
     let [a, b, c] = [11, 33, 0];
     ContractUtils = await import("./contract-util.js");
