@@ -2,12 +2,12 @@
 
 export { generateFunctionParameters, solver };
 
-function generateFunctionParameters(): [number, number, number] {
+function generateFunctionParameters(max: number): [number, number, number] {
   let a = 0;
   let b = 0;
   let c = 0;
   // using module to keep the values within humand sovle-able range
-  let max = 50;
+  /* let max = 50; */
 
   // generating fitting params
   // reason for the do while loop with root check at the end:
@@ -28,8 +28,8 @@ function generateFunctionParameters(): [number, number, number] {
   } while (
     solver(a, b, c)[0] % 1 != 0 ||
     solver(a, b, c)[1] % 1 != 0 ||
-    solver(a, b, c)[0] < 0 ||
-    solver(a, b, c)[1] < 0
+    solver(a, b, c)[0] <= 0 ||
+    solver(a, b, c)[1] <= 0
   );
 
   return [a, b, c];

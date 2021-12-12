@@ -10,7 +10,7 @@ esbuild.build({
   logLevel: "info",
   plugins: [vuePlugin()],
   define: {
-    "process.env.NODE_ENV": JSON.stringify("production"),
+    "process.env.NODE_ENV": JSON.stringify("development"),
   },
   format: "esm",
   target: "esnext",
