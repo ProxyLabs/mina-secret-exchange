@@ -85,8 +85,8 @@ class SecretExchange extends SmartContract {
     let balanceP2 = await this.balanceP2.get();
 
     // making sure the right account is requesting a swap
-    // TODO: Change signature acceptance
-    s.verify(pKey, Field(1).toFields()).assertEquals(true);
+    const nonce: UInt32 = await this.nonce;
+    s.verify(pKey, nonce.toFields()).assertEquals(true);
 
     if (pKey.equals(this.owners[0]).toBoolean()) {
       // Making sure token balance is enough so it can be swapped for mina
@@ -135,8 +135,8 @@ class SecretExchange extends SmartContract {
     containsPublicKey(this.owners, pKey).assertEquals(true);
 
     // making sure the right account is requesting a swap
-    // TODO: Change signature acceptance
-    s.verify(pKey, Field(1).toFields()).assertEquals(true);
+    const nonce: UInt32 = await this.nonce;
+    s.verify(pKey, nonce.toFields()).assertEquals(true);
 
     let tokenSupply = await this.tokenBalance.get();
 

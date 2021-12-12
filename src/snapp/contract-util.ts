@@ -108,13 +108,13 @@ async function swapForMina(
 ): Promise<boolean> {
   let account: PrivateKey;
   account = acc == 0 ? account1 : account2;
-
+  const { nonce: snappNonce } = await Mina.getAccount(snappAddress);
   let result = true;
   await Mina.transaction(account, async () => {
     await exchangeInstance.swapForMina(
       UInt64.fromNumber(amount),
       new Field(x),
-      Signature.create(account, Field(1).toFields()),
+      Signature.create(account, snappNonce.toFields()),
       account.toPublicKey()
     );
     // claiming mina
@@ -138,6 +138,7 @@ async function swapForToken(
 ): Promise<boolean> {
   let account: PrivateKey;
   account = acc == 0 ? account1 : account2;
+  const { nonce: snappNonce } = await Mina.getAccount(snappAddress);
 
   let result = true;
   await Mina.transaction(account, async () => {
@@ -148,7 +149,7 @@ async function swapForToken(
     await exchangeInstance.swapForToken(
       UInt64.fromNumber(amount),
       new Field(x),
-      Signature.create(account, Field(1).toFields()),
+      Signature.create(account, snappNonce.toFields()),
       account.toPublicKey()
     );
   })
