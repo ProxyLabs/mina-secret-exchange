@@ -1,5 +1,5 @@
 // just some util functions for double checking etc
-export { generateFunctionParameters, solver };
+export { generateFunctionParameters, solver, sanityCheck };
 /**
  * Generates parameters for equation ax² - bx + c based on a handful of checks
  * @returns Return the parameters a, b and c

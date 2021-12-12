@@ -6,14 +6,17 @@
   "scripts": {
     "serve": "node src/server.js",
     "esbuild": "node src/build.js",
-    "build": "npx tsc && npm run esbuild && npm run serve"
+    "build": "npx tsc && npm run esbuild && npm run serve",
+    "test": "npx tsc && jest --collect-coverage --verbose"
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "jest": "^27.4.4",
     "snarkyjs": "^0.1.11",
     "vue": "^2.6.11"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.3",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
@@ -27,7 +30,8 @@
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "jest": true
     },
     "extends": [
       "plugin:vue/essential",
