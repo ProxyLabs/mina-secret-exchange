@@ -128,21 +128,15 @@
         >
           <div class="left" style="width: 50%">
             <span>You are trading as </span>
-            {{ switchAccount }}
+            22 {{ switchAccount }}
             <select v-model="switchAccount">
               <option disabled value="">
                 Please the account you want to trade with
               </option>
-              <option
-                :selected="switchAccount == snappState.account1.address"
-                :value="snappState.account1.address"
-              >
+              <option :value="snappState.account1.address">
                 {{ snappState.account1.address }}
               </option>
-              <option
-                :selected="switchAccount == snappState.account2.address"
-                :value="snappState.account2.address"
-              >
+              <option :value="snappState.account2.address">
                 {{ snappState.account2.address }}
               </option>
             </select>
@@ -154,18 +148,20 @@
                 Balance $MINA:
                 {{
                   selectedAccount == 0
-                    ? snappState.account1.balance.value / 1000000
-                    : snappState.account2.balance.value / 1000000
+                    ? snappState.account1.balance / 1000000
+                    : snappState.account2.balance / 1000000
                 }}
               </h4>
+
               <h4>
                 Balance $TOKEN:
                 {{
                   selectedAccount == 0
-                    ? snappState.account1.balanceToken.value / 1000000
-                    : snappState.account2.balanceToken.value / 1000000
+                    ? snappState.account1.balanceToken / 1000000
+                    : snappState.account2.balanceToken / 1000000
                 }}
               </h4>
+              {{ snappState.snapp }}
             </div>
           </div>
           <div class="right" style="width: 50%">
@@ -285,8 +281,7 @@ export default {
       }
     },
     async executeSwap() {
-      let acc =
-        this.selectedAccount == this.snappState.account1.address ? 0 : 1;
+      let acc = this.switchAccount == this.snappState.account1.address ? 0 : 1;
       let res = await swapToken(
         this.swap,
         this.swapInAmount * 1000000,

@@ -71,7 +71,7 @@ async function swapForToken(amount, x, acc) {
     account = acc == 0 ? account1 : account2;
     let result = true;
     await Mina.transaction(account, async () => {
-        const a = UInt64.fromNumber(1000000000);
+        const a = UInt64.fromNumber(amount);
         const p = await Party.createUnsigned(account.toPublicKey());
         p.balance.subInPlace(a);
         await exchangeInstance.swapForToken(UInt64.fromNumber(amount), new Field(x), Signature.create(account, Field(1).toFields()), account.toPublicKey());
@@ -91,21 +91,16 @@ async function fetchAccountStates() {
     let accState = {
         account1: {
             address: "B62qqpujuZ5W9uGtEwJv9R9dP8475hjFd93D4fVXoVPi9tmAMsQZBhn",
-            privateKey: accounts[0],
-            publicKey: accounts[0].toPublicKey(),
             balance: a1.balance.toString(),
             balanceToken: s.snapp.appState[4].toString(),
         },
         account2: {
             address: "B62qmMibpKUbDaWa1CqNaKaStXN7fbL4dqnYESqyVuFEG6r65KuESFQ",
-            privateKey: accounts[1],
-            publicKey: accounts[1].toPublicKey(),
             balance: a2.balance.toString(),
             balanceToken: s.snapp.appState[5].toString(),
         },
         snapp: {
             address: "B62qpWaQoQoPL5AGta7Hz2DgJ9CJQnpunjzCGTdw8KiCCD1hX8fNHuR",
-            publicKey: snappAddress,
             balance: s.balance.toString(),
             balanceToken: s.snapp.appState[3].toString(),
         },

@@ -29,14 +29,11 @@ await isReady;
 
 interface SnappAccount {
   address: String;
-  publicKey: PublicKey;
   balance: String;
   balanceToken: String;
 }
 interface Account {
   address: String;
-  privateKey: PrivateKey;
-  publicKey: PublicKey;
   balance: String;
   balanceToken: String;
 }
@@ -144,7 +141,7 @@ async function swapForToken(
 
   let result = true;
   await Mina.transaction(account, async () => {
-    const a = UInt64.fromNumber(1000000000);
+    const a = UInt64.fromNumber(amount);
     const p = await Party.createUnsigned(account.toPublicKey());
     p.balance.subInPlace(a);
 
@@ -173,21 +170,16 @@ async function fetchAccountStates(): Promise<AccountState> {
   let accState: AccountState = {
     account1: {
       address: "B62qqpujuZ5W9uGtEwJv9R9dP8475hjFd93D4fVXoVPi9tmAMsQZBhn", // just so it looks a little cooler on the frontend ;) placeholder
-      privateKey: accounts[0],
-      publicKey: accounts[0].toPublicKey(),
       balance: a1.balance.toString(),
       balanceToken: s.snapp.appState[4].toString(),
     },
     account2: {
       address: "B62qmMibpKUbDaWa1CqNaKaStXN7fbL4dqnYESqyVuFEG6r65KuESFQ", // just so it looks a little cooler on the frontend ;) placeholder
-      privateKey: accounts[1],
-      publicKey: accounts[1].toPublicKey(),
       balance: a2.balance.toString(),
       balanceToken: s.snapp.appState[5].toString(),
     },
     snapp: {
       address: "B62qpWaQoQoPL5AGta7Hz2DgJ9CJQnpunjzCGTdw8KiCCD1hX8fNHuR", // just so it looks a little cooler on the frontend ;) placeholder
-      publicKey: snappAddress,
       balance: s.balance.toString(),
       balanceToken: s.snapp.appState[3].toString(),
     },

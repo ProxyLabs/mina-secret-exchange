@@ -40,7 +40,7 @@ class SecretExchange extends SmartContract {
     this.balance.addInPlace(balance);
     this.quadraticFunction = State.init(quadraticFunction);
 
-    this.tokenBalance = State.init(new Field(800).mul(1000000)); // 800 Token initial balance, mul 100000 cuz decimals
+    this.tokenBalance = State.init(balance.value); // Token initial balance
 
     // keeping track of the balance of two accounts
     this.owners = owners;
@@ -100,6 +100,8 @@ class SecretExchange extends SmartContract {
       this.balanceP2.set(balanceP2.sub(amount.value));
     }
 
+    const tokenBalance = await this.tokenBalance.get();
+    this.tokenBalance.set(tokenBalance.add(amount.value));
     // finally, sub mina from snapp account and free it to be collected by the swap requestor
     this.balance.subInPlace(amount);
   }
@@ -137,14 +139,14 @@ class SecretExchange extends SmartContract {
 
     let tokenSupply = await this.tokenBalance.get();
 
-    this.balance.addInPlace(amount);
-    console.log("just subbed 2");
     // making sure we still have enough toklen in our reserve
     tokenSupply.assertGte(amount.value);
 
     // add mina to the contract
     this.balance.addInPlace(amount);
-    console.log("just subbed 2");
+
+    const tokenBalance = await this.tokenBalance.get();
+    this.tokenBalance.set(tokenBalance.sub(amount.value));
 
     if (pKey.equals(this.owners[0]).toBoolean()) {
       let balanceBefore = await this.balanceP1.get();
