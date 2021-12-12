@@ -127,7 +127,7 @@
           style="display: flex; margin-left: 10%; margin-right: 10%"
         >
           <div class="left" style="width: 50%">
-            <span style="margin-bottom: 5px">You are trading as </span>
+            <h3 style="margin-bottom: 5px">You are trading as</h3>
             <select v-model="switchAccount">
               <option disabled value="">
                 Please the account you want to trade with
