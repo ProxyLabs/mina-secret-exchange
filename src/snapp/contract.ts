@@ -40,7 +40,8 @@ class SecretExchange extends SmartContract {
     this.balance.addInPlace(balance);
     this.quadraticFunction = State.init(quadraticFunction);
 
-    this.tokenBalance = State.init(balance.value); // Token initial balance
+    // initial token balance
+    this.tokenBalance = State.init(balance.value.mul(10));
 
     // keeping track of the balance of two accounts
     this.owners = owners;

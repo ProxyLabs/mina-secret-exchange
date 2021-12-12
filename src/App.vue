@@ -127,8 +127,7 @@
           style="display: flex; margin-left: 10%; margin-right: 10%"
         >
           <div class="left" style="width: 50%">
-            <span>You are trading as </span>
-            22 {{ switchAccount }}
+            <span style="margin-bottom: 5px">You are trading as </span>
             <select v-model="switchAccount">
               <option disabled value="">
                 Please the account you want to trade with
@@ -288,6 +287,17 @@ export default {
         acc,
         this.proposedSolution
       );
+      if (res) {
+        this.setSnackbar(
+          "success",
+          `You successfully swapped ${this.swapInAmount} $${
+            this.swap == "MINA/PROXY" ? "MINA" : "PROXY"
+          } for $${this.swap == "MINA/PROXY" ? "PROXY" : "MINA"}`
+        );
+      } else {
+        this.setSnackbar("failure", "Swapping failed.");
+      }
+
       await this.updateSnappState();
       console.log(res);
     },
