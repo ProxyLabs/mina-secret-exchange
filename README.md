@@ -1,12 +1,12 @@
 # Mina Snapp: Mina Secret Exchange
 
+# <https://mina.proxylabs.org/>
+
 ```
 Mina-Secret-Exchange is a zk-powered Smart Contract (Snapp) submission for the Mina Snapp Bootcamp 2021.
 ```
 
 A demo version will be accessible to everyone, without having to host it or use the code yourself
-
-## <https://mina.proxylabs.org/>
 
 ### Explanation
 
