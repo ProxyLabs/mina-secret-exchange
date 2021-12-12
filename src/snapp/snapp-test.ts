@@ -18,8 +18,8 @@ const main = async () => {
   let res4 = await swapToken("MINA/PROXY", 1123123, 0, 0);
   console.log(res4);
 
-  /*   let res4 = await swapToken("PROXY/MINA", 30000000, 0, 0);
-  console.log(res4); */
+  let res5 = await swapToken("PROXY/MINA", 1123123, 0, 0);
+  console.log(res5);
 };
 
 main();

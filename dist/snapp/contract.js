@@ -21,9 +21,9 @@ class SecretExchange extends SmartContract {
         // keeping track of the balance of two accounts
         this.owners = owners;
         // balance of p1 and p2
-        let tkBalance = new Field(500000000);
-        this.balanceP1 = State.init(tkBalance);
-        this.balanceP2 = State.init(tkBalance);
+        // balance lives on chain
+        this.balanceP1 = State.init(Field.zero);
+        this.balanceP2 = State.init(Field.zero);
     }
     async swapForMina(amount, x, s, pKey) {
         // verifiying x again
@@ -61,53 +61,38 @@ class SecretExchange extends SmartContract {
         this.balance.subInPlace(amount);
     }
     async swapForToken(amount, x, s, pKey) {
-        this.balance.addInPlace(amount);
-        console.log("just subbed 2");
         // verifiying x again
-        /*     const func = await this.quadraticFunction.get();
-    
+        const func = await this.quadraticFunction.get();
         const a = func.a;
         const b = func.b;
         const c = func.c;
-    
         let ax2 = a.mul(x).mul(x);
-    
         let bx = b.mul(x);
-    
         let solution = ax2.sub(bx).add(c);
-    
         // we are checking that x satisfies the equation ax² - bx + c = 0
         solution.assertEquals(0);
-    
         // proceeding with swap
-    
         // making sure key is inside of owners list
         containsPublicKey(this.owners, pKey).assertEquals(true);
-    
         // making sure the right account is requesting a swap
         // TODO: Change signature acceptance
         s.verify(pKey, Field(1).toFields()).assertEquals(true);
-    
         let tokenSupply = await this.tokenBalance.get();
-     */
+        this.balance.addInPlace(amount);
+        console.log("just subbed 2");
         // making sure we still have enough toklen in our reserve
-        /*    tokenSupply.assertGte(amount.value);
-         */
+        tokenSupply.assertGte(amount.value);
         // add mina to the contract
-        /*
+        this.balance.addInPlace(amount);
+        console.log("just subbed 2");
         if (pKey.equals(this.owners[0]).toBoolean()) {
-          let balanceBefore = await this.balanceP1.get();
-          await this.balanceP1.set(Field(3909));
-    
-          let after = await this.balanceP1.get();
-          Circuit.asProver(() => {
-            console.log("token balance after: " + after);
-          });
-        } else if (pKey.equals(this.owners[1]).toBoolean()) {
-          // Making sure token balance is enough so it can be swapped for mina
-          let balanceBefore = await this.balanceP2.get();
-          this.balanceP2.set(balanceBefore.add(amount.toFields()[0]));
-        } */
+            let balanceBefore = await this.balanceP1.get();
+            this.balanceP1.set(balanceBefore.add(amount.value));
+        }
+        else if (pKey.equals(this.owners[1]).toBoolean()) {
+            let balanceBefore = await this.balanceP2.get();
+            this.balanceP2.set(balanceBefore.add(amount.value));
+        }
     }
     async verifySolution(x, pKey) {
         containsPublicKey(this.owners, pKey).assertEquals(true);

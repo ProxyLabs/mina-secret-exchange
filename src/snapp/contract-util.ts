@@ -30,15 +30,15 @@ await isReady;
 interface SnappAccount {
   address: String;
   publicKey: PublicKey;
-  balance: UInt64;
-  balanceToken: UInt64;
+  balance: String;
+  balanceToken: String;
 }
 interface Account {
   address: String;
   privateKey: PrivateKey;
   publicKey: PublicKey;
-  balance: UInt64;
-  balanceToken: UInt64;
+  balance: String;
+  balanceToken: String;
 }
 interface AccountState {
   account1: Account;
@@ -112,15 +112,6 @@ async function swapForMina(
   let account: PrivateKey;
   account = acc == 0 ? account1 : account2;
 
-  console.log("----------");
-  let before = await Mina.getAccount(account.toPublicKey());
-  console.log("balance before: " + before.balance.value);
-  let s = await Mina.getAccount(snappAddress);
-  console.log("snapp after: " + s.balance.value);
-  let sc = await Mina.getAccount(snappAddress);
-  console.log("token balance: " + sc.snapp.appState[4]);
-  console.log("token balance: " + sc.snapp.appState[5]);
-  console.log("----------");
   let result = true;
   await Mina.transaction(account, async () => {
     await exchangeInstance.swapForMina(
@@ -140,16 +131,7 @@ async function swapForMina(
       console.log(e);
       result = false;
     });
-  console.log("swapped " + result);
-  console.log("----------");
-  let after = await Mina.getAccount(account.toPublicKey());
-  console.log("balance after: " + after.balance.value);
-  let sa = await Mina.getAccount(snappAddress);
-  console.log("snapp after: " + sa.balance.value);
-  let scd = await Mina.getAccount(snappAddress);
-  console.log("token balance: " + scd.snapp.appState[4]);
-  console.log("token balance: " + scd.snapp.appState[5]);
-  console.log("----------");
+
   return result;
 }
 async function swapForToken(
@@ -160,27 +142,17 @@ async function swapForToken(
   let account: PrivateKey;
   account = acc == 0 ? account1 : account2;
 
-  console.log("----------");
-  let before = await Mina.getAccount(account1.toPublicKey());
-  console.log("balance before: " + before.balance.value);
-  let s = await Mina.getAccount(snappAddress);
-  console.log("snapp after: " + s.balance.value);
-  let sc = await Mina.getAccount(snappAddress);
-  console.log("token supply: " + sc.snapp.appState[3]);
-  console.log("token balance: " + sc.snapp.appState[4]);
-  console.log("token balance: " + sc.snapp.appState[5]);
-  console.log("----------");
   let result = true;
-  await Mina.transaction(account1, async () => {
+  await Mina.transaction(account, async () => {
     const a = UInt64.fromNumber(1000000000);
-    const p = await Party.createUnsigned(account1.toPublicKey());
+    const p = await Party.createUnsigned(account.toPublicKey());
     p.balance.subInPlace(a);
 
     await exchangeInstance.swapForToken(
       UInt64.fromNumber(amount),
       new Field(x),
       Signature.create(account, Field(1).toFields()),
-      account1.toPublicKey()
+      account.toPublicKey()
     );
   })
     .send()
@@ -189,18 +161,7 @@ async function swapForToken(
       console.log(e);
       result = false;
     });
-  console.log("swapped " + result);
-  console.log("----------");
-  let after = await Mina.getAccount(account1.toPublicKey());
-  console.log("balance after: " + after.balance.value);
-  console.log("----");
-  let sa = await Mina.getAccount(snappAddress);
-  console.log("snapp after: " + sa.balance.value);
-  let scd = await Mina.getAccount(snappAddress);
-  console.log("token supply: " + scd.snapp.appState[3]);
-  console.log("token balance: " + scd.snapp.appState[4]);
-  console.log("token balance: " + scd.snapp.appState[5]);
-  console.log("----------");
+
   return result;
 }
 
@@ -214,21 +175,21 @@ async function fetchAccountStates(): Promise<AccountState> {
       address: "B62qqpujuZ5W9uGtEwJv9R9dP8475hjFd93D4fVXoVPi9tmAMsQZBhn", // just so it looks a little cooler on the frontend ;) placeholder
       privateKey: accounts[0],
       publicKey: accounts[0].toPublicKey(),
-      balance: a1.balance,
-      balanceToken: UInt64.fromNumber(99), // TODO: change
+      balance: a1.balance.toString(),
+      balanceToken: s.snapp.appState[4].toString(),
     },
     account2: {
       address: "B62qmMibpKUbDaWa1CqNaKaStXN7fbL4dqnYESqyVuFEG6r65KuESFQ", // just so it looks a little cooler on the frontend ;) placeholder
       privateKey: accounts[1],
       publicKey: accounts[1].toPublicKey(),
-      balance: a2.balance,
-      balanceToken: UInt64.fromNumber(99), // TODO: change
+      balance: a2.balance.toString(),
+      balanceToken: s.snapp.appState[5].toString(),
     },
     snapp: {
       address: "B62qpWaQoQoPL5AGta7Hz2DgJ9CJQnpunjzCGTdw8KiCCD1hX8fNHuR", // just so it looks a little cooler on the frontend ;) placeholder
       publicKey: snappAddress,
-      balance: s.balance,
-      balanceToken: UInt64.fromNumber(99), // TODO: change
+      balance: s.balance.toString(),
+      balanceToken: s.snapp.appState[3].toString(),
     },
   };
   /*   console.log(accState); */

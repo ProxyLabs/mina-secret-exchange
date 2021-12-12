@@ -289,10 +289,11 @@ export default {
         this.selectedAccount == this.snappState.account1.address ? 0 : 1;
       let res = await swapToken(
         this.swap,
-        this.swapInAmount,
+        this.swapInAmount * 1000000,
         acc,
         this.proposedSolution
       );
+      await this.updateSnappState();
       console.log(res);
     },
     async updateSnappState() {
