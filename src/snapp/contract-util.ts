@@ -173,6 +173,8 @@ async function swapForToken(
   let result = true;
   await Mina.transaction(account, async () => {
     const a = UInt64.fromNumber(amount);
+
+    //const p = await Party.createSigned(account);
     const p = await Party.createUnsigned(account.toPublicKey());
     p.balance.subInPlace(a);
 

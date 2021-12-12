@@ -2,7 +2,10 @@ import { generateFunctionParameters, solver } from "./util.js";
 export { init, submitSolution, getState, swapToken, deployDebugContract };
 // dynamic import so page doesnt freeze at startup
 let ContractUtils;
-// deploying a debug contract
+/**
+ * Deploys a debug contract with equation parameters a = 11, b = 33, c = and roots: x_1 = 0, x_1 = 0
+ * @returns Returns equation parameters`a`, `b`, `c`
+ */
 async function deployDebugContract() {
     let [a, b, c] = [11, 33, 0];
     ContractUtils = await import("./contract-util.js");
@@ -13,6 +16,11 @@ async function deployDebugContract() {
     ); */
     return [a, b, c];
 }
+/**
+ * Deploys a contract. Generates equation parameters automatically and returns them.
+ * @param max Limit for parameter, parameters cant exceed max
+ * @returns Returns equation parameters`a`, `b`, `c`
+ */
 async function init(max) {
     let [a, b, c] = generateFunctionParameters(max);
     ContractUtils = await import("./contract-util.js");
@@ -30,13 +38,30 @@ async function init(max) {
     ); */
     return [a, b, c];
 }
+/**
+ * Submits a solution to the contract to verify it
+ * @param x One possible solution for the equation
+ * @returns Returns true or false whether submission has failed or succeeded
+ */
 async function submitSolution(x) {
     return await ContractUtils.submitSolution(x);
 }
+/**
+ * Gets the snapp state
+ * @returns Returns the snapp state
+ */
 async function getState() {
     let res = await ContractUtils.fetchAccountStates();
     return res;
 }
+/**
+ * Swaps a token for another
+ * @param pair Swap pair 'MINA/PROXY' or something else
+ * @param amount Amount you want to swap - 1 to 1
+ * @param account Account number to trade with - 0 or 1 currently
+ * @param x Solution to the equation to check you are allowed to use the exchange
+ * @returns Returns whether or not swap was successful
+ */
 async function swapToken(pair, amount, account, x) {
     let res = false;
     if (pair == "PROXY/MINA") {

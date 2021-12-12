@@ -6,7 +6,7 @@ Mina-Secret-Exchange is a zk-powered Smart Contract (Snapp) submission for the M
 
 A demo version will be accessible to everyone, without having to host it or use the code yourself
 
-<https://mina.proxylabs.org/>
+## <https://mina.proxylabs.org/>
 
 ### Explanation
 

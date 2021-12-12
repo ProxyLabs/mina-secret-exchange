@@ -13,7 +13,12 @@ let account2 = Local.testAccounts[1].privateKey;
 const accounts = [account1, account2];
 let snappPrivkey = PrivateKey.random();
 let snappAddress = snappPrivkey.toPublicKey();
-// all functions that somehow interfact with the smart contract/blockchain
+/**
+ * Deploys a contract with equation params a, b and c
+ * @param a a
+ * @param b b
+ * @param c c
+ */
 async function deployContract(a, b, c) {
     console.log("deploying");
     await Mina.transaction(account1, async () => {
@@ -29,6 +34,11 @@ async function deployContract(a, b, c) {
         console.log(e);
     });
 }
+/**
+ * Submits solution to the contract
+ * @param x Solution to verify
+ * @returns Returns a boolean wheter or not verification was sucessful
+ */
 async function submitSolution(x) {
     let result = true;
     await Mina.transaction(account1, async () => {
@@ -43,6 +53,10 @@ async function submitSolution(x) {
     });
     return result;
 }
+/**
+ * Gets the equation parameters a,b and c
+ * @returns Returns the equation parameters a,b and c
+ */
 async function getEquationParameters() {
     let snappState = (await Mina.getAccount(snappAddress)).snapp.appState;
     return [
@@ -51,6 +65,12 @@ async function getEquationParameters() {
         parseInt(snappState[2].toString()),
     ];
 }
+/**
+ * Swaps  MINA for a token
+ * @param amount Amount to swap
+ * @param x Solution to the equation
+ * @param acc Account to trade with
+ */
 async function swapForMina(amount, x, acc) {
     let account;
     account = acc == 0 ? account1 : account2;
@@ -69,6 +89,12 @@ async function swapForMina(amount, x, acc) {
     });
     return result;
 }
+/**
+ * Swaps Token for MINA
+ * @param amount Amount to swap
+ * @param x Solution to the equation
+ * @param acc Account to trade with
+ */
 async function swapForToken(amount, x, acc) {
     let account;
     account = acc == 0 ? account1 : account2;
@@ -76,7 +102,8 @@ async function swapForToken(amount, x, acc) {
     let result = true;
     await Mina.transaction(account, async () => {
         const a = UInt64.fromNumber(amount);
-        const p = await Party.createUnsigned(account.toPublicKey());
+        const p = await Party.createSigned(account);
+        //const p = await Party.createUnsigned(account.toPublicKey());
         p.balance.subInPlace(a);
         await exchangeInstance.swapForToken(UInt64.fromNumber(amount), new Field(x), Signature.create(account, snappNonce.toFields()), account.toPublicKey());
     })
@@ -88,6 +115,10 @@ async function swapForToken(amount, x, acc) {
     });
     return result;
 }
+/**
+ * Fetches the account status
+ * @returns Returns AccountState
+ */
 async function fetchAccountStates() {
     const a1 = await Mina.getAccount(accounts[0].toPublicKey());
     const a2 = await Mina.getAccount(accounts[1].toPublicKey());

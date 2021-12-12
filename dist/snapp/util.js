@@ -1,5 +1,9 @@
 // just some util functions for double checking etc
 export { generateFunctionParameters, solver };
+/**
+ * Generates parameters for equation ax² - bx + c based on a handful of checks
+ * @returns Return the parameters a, b and c
+ */
 function generateFunctionParameters(max) {
     let a = 0;
     let b = 0;
@@ -27,12 +31,20 @@ function generateFunctionParameters(max) {
         solver(a, b, c)[1] <= 0);
     return [a, b, c];
 }
+/**
+ * Checks if x is a solution to an equation with parameters a, b and c
+ * @returns Return wheter x is a valid solution
+ */
 function sanityCheck(a, b, c, x) {
     // sanity check possible solution
     // ax² - bx + c = 0 must satisfy equation
     let solution = a * (x * x) - b * x + c;
     return solution == 0;
 }
+/**
+ * Solves the equation with parameters a, b and c
+ * @returns Return all solutions
+ */
 function solver(a, b, c) {
     // ax² - bx + c = 0
     // x = (-b) - sqrt(b² - 4ac) / 2a
