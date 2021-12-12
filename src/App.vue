@@ -299,18 +299,15 @@ export default {
       }
 
       await this.updateSnappState();
-      console.log(res);
     },
     async updateSnappState() {
       let state = await getState();
 
-      console.log(state);
       this.snappState = {
         account1: state.account1,
         account2: state.account2,
         snapp: state.snapp,
       };
-      console.log(this.snappState);
     },
     setSnackbar(type, msg) {
       this.showSnackbar = false;
@@ -347,16 +344,22 @@ export default {
     getEquation() {
       let eq = `${this.params[0]}x² - ${this.params[1]}x + ${this.params[2]} = 0`;
       if (this.params[1] != 0 && this.params[2] != 0) {
-        eq = `${this.params[0]}x² - ${this.params[1]}x + ${this.params[2]} = 0`;
+        eq = `${this.params[0] == 1 ? "" : this.params[0]}x² - ${
+          this.params[1]
+        }x + ${this.params[2]} = 0`;
       }
       if (this.params[1] == 0 && this.params[2] != 0) {
-        eq = `${this.params[0]}x² + ${this.params[2]} = 0`;
+        eq = `${this.params[0] == 1 ? "" : this.params[0]}x² + ${
+          this.params[2]
+        } = 0`;
       }
       if (this.params[1] == 0 && this.params[2] == 0) {
-        eq = `${this.params[0]}x² = 0`;
+        eq = `${this.params[0] == 1 ? "" : this.params[0]}x² = 0`;
       }
       if (this.params[1] != 0 && this.params[2] == 0) {
-        eq = `${this.params[0]}x² - ${this.params[1]}x = 0`;
+        eq = `${this.params[0] == 1 ? "" : this.params[0]}x² - ${
+          this.params[1]
+        }x = 0`;
       }
       return eq;
     },

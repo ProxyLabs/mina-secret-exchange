@@ -29,9 +29,9 @@ async function deployDebugContract(): Promise<[number, number, number]> {
   await ContractUtils.deployContract(a, b, c);
 
   let [x1, x2] = solver(a, b, c);
-  console.log(
+  /*   console.log(
     `deployed snapp with equation of form ${a}x² - ${b}x + ${c}; possible solutions would be x1 = ${x1}, x2 = ${x2}`
-  );
+  ); */
 
   return [a, b, c];
 }
@@ -51,9 +51,9 @@ async function init(max): Promise<[number, number, number]> {
   /*   let [x, y, z] = await getEquationParameters();
    */
   let [x1, x2] = solver(a, b, c);
-  console.log(
+  /*   console.log(
     `deployed snapp with equation of form ${a}x² - ${b}x + ${c}; possible solutions would be x1 = ${x1}, x2 = ${x2}`
-  );
+  ); */
 
   return [a, b, c];
 }
