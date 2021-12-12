@@ -17,12 +17,8 @@
       math-nerds have access!
     </p>
     <div class="content-wrapper">
+      <!-- entry page, where a user can generate and deploy the contract -->
       <div v-if="atPage == 0">
-        <!--         <span
-          >Contract deployed under
-          B62qk8bcoWGkmLvgSekJf...7bhUAq9Vci4nvgb4z</span
-        >
-        <span>Your public key: B62qm4QbSnmQWM3x7SUi...xtDvsne7YP4nC8Nh7f</span> -->
         <Loader
           :style="deploying ? 'visibility: visible;' : 'visibility: hidden;'"
         />
@@ -58,6 +54,8 @@
           <span>Continue</span>
         </button>
       </div>
+
+      <!-- page where a user has to insert one possible to the equation and submit it to the network -->
       <div v-if="atPage == 1">
         <h2 style="border: 2px red dotted; margin-left: 40%; margin-right: 40%">
           <h5 style="margin: 5px">Here is your equation:</h5>
@@ -115,6 +113,9 @@
           <br />
         </div>
       </div>
+
+      <!-- final exhange page with swap feature and account overview -->
+
       <div v-if="atPage == 2">
         <h2 style="border: 2px red dotted; margin-left: 30%; margin-right: 30%">
           <h5 style="margin: 5px">
@@ -243,12 +244,6 @@
             </div>
           </div>
           <div class="right" style="width: 50%">
-            <!--             <h4>
-              You are interacting with Contract
-              <h5 style="font-size: 1rem; margin-top: 2px; font-weight: 400">
-                {{ snappState.snapp.address }}
-              </h5>
-            </h4>  -->
             <div class="swapper">
               <h2>Swap</h2>
               <h3>{{ swap }} - 1 ~ 1</h3>
@@ -302,6 +297,7 @@
 </template>
 
 <script>
+// custom vue components
 import Loader from "./components/Loader.vue";
 import Equation from "./components/Equation.vue";
 
@@ -311,6 +307,7 @@ import Snackbar from "./components/Snackbar.vue";
 import Mina from "./components/Mina.vue";
 import Proxy from "./components/Proxy.vue";
 
+// methods to access the network and smart contract
 import {
   init,
   submitSolution,
@@ -353,6 +350,7 @@ export default {
     };
   },
   methods: {
+    // changes the ticket symbol
     changeSwap() {
       if (this.swap == "MINA/PROXY") {
         this.swap = "PROXY/MINA";
@@ -360,6 +358,7 @@ export default {
         this.swap = "MINA/PROXY";
       }
     },
+    // executes a swap and calls a method in the smart contract
     async executeSwap() {
       let acc = this.switchAccount == this.snappState.account1.address ? 0 : 1;
       let res = await swapToken(
@@ -368,6 +367,7 @@ export default {
         acc,
         this.proposedSolution
       );
+      // sets the snackbar
       if (res) {
         this.setSnackbar(
           "success",
@@ -375,7 +375,7 @@ export default {
             this.swap == "MINA/PROXY" ? "MINA" : "PROXY"
           } for $${this.swap == "MINA/PROXY" ? "PROXY" : "MINA"}`
         );
-
+        // adds tx details to the acc that executed the swap
         if (acc == 0) {
           this.transactionsAccount1.push({
             direction: "out",
@@ -413,6 +413,7 @@ export default {
 
       await this.updateSnappState();
     },
+    // gets latest snapp state
     async updateSnappState() {
       let state = await getState();
 
@@ -422,6 +423,7 @@ export default {
         snapp: state.snapp,
       };
     },
+    // sets the snackbar
     setSnackbar(type, msg) {
       this.showSnackbar = false;
       this.snack.type = type;
@@ -431,6 +433,7 @@ export default {
         this.showSnackbar = false;
       }, 3500);
     },
+    // submits a possible solution to the network and waits for answer, displays snackbar
     async submitSolution() {
       this.beingSubmited = true;
       let res = await submitSolution(this.proposedSolution);
@@ -454,6 +457,7 @@ export default {
         this.switchAccount = this.snappState.account1.address;
       }
     },
+    // forms the parameters a, b and c into a nice readable equation
     getEquation() {
       let eq = `${this.params[0]}x² - ${this.params[1]}x + ${this.params[2]} = 0`;
       if (this.params[1] != 0 && this.params[2] != 0) {
@@ -477,8 +481,10 @@ export default {
       return eq;
     },
     next() {
+      // swipes the page
       this.atPage++;
     },
+    // deploys the contract
     async deploy() {
       this.deploying = true;
       this.params = await init(this.difficulty);
