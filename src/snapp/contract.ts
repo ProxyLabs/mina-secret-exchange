@@ -57,7 +57,7 @@ class SecretExchange extends SmartContract {
     s: Signature,
     pKey: PublicKey
   ) {
-    (await this.verify(x)).assertEquals(Bool(true));
+    (await this.verifyEquationSolution(x)).assertEquals(Bool(true));
 
     // making sure key is inside of owners list
     containsPublicKey(this.owners, pKey).assertEquals(true);
