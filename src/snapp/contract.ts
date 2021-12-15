@@ -96,7 +96,7 @@ class SecretExchange extends SmartContract {
     s: Signature,
     pKey: PublicKey
   ) {
-    (await this.verify(x)).assertEquals(Bool(true));
+    (await this.verifyEquationSolution(x)).assertEquals(Bool(true));
 
     // making sure key is inside of owners list
     containsPublicKey(this.owners, pKey).assertEquals(true);
@@ -125,7 +125,12 @@ class SecretExchange extends SmartContract {
     }
   }
 
-  async verify(x: Field): Promise<Bool> {
+  @method async verifySolution(x: Field, pKey: PublicKey) {
+    containsPublicKey(this.owners, pKey).assertEquals(true);
+    (await this.verifyEquationSolution(x)).assertEquals(Bool(true));
+  }
+
+  async verifyEquationSolution(x: Field): Promise<Bool> {
     // a * x * x - b * x + c;
     const func = await this.quadraticFunction.get();
 
@@ -142,11 +147,6 @@ class SecretExchange extends SmartContract {
     // we are checking that x satisfies the equation ax² - bx + c = 0
     let result = solution.equals(0);
     return result;
-  }
-
-  @method async verifySolution(x: Field, pKey: PublicKey) {
-    containsPublicKey(this.owners, pKey).assertEquals(true);
-    (await this.verify(x)).assertEquals(Bool(true));
   }
 }
 
