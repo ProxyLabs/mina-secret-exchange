@@ -26,17 +26,7 @@ class SecretExchange extends SmartContract {
         this.balanceP2 = State.init(Field.zero);
     }
     async swapForMina(amount, x, s, pKey) {
-        // verifiying x again
-        const func = await this.quadraticFunction.get();
-        const a = func.a;
-        const b = func.b;
-        const c = func.c;
-        let ax2 = a.mul(x).mul(x);
-        let bx = b.mul(x);
-        let solution = ax2.sub(bx).add(c);
-        // we are checking that x satisfies the equation ax² - bx + c = 0
-        solution.assertEquals(0);
-        // proceeding with swap
+        (await this.verify(x)).assertEquals(Bool(true));
         // making sure key is inside of owners list
         containsPublicKey(this.owners, pKey).assertEquals(true);
         // getting balances
@@ -63,17 +53,7 @@ class SecretExchange extends SmartContract {
         this.balance.subInPlace(amount);
     }
     async swapForToken(amount, x, s, pKey) {
-        // verifiying x again
-        const func = await this.quadraticFunction.get();
-        const a = func.a;
-        const b = func.b;
-        const c = func.c;
-        let ax2 = a.mul(x).mul(x);
-        let bx = b.mul(x);
-        let solution = ax2.sub(bx).add(c);
-        // we are checking that x satisfies the equation ax² - bx + c = 0
-        solution.assertEquals(0);
-        // proceeding with swap
+        (await this.verify(x)).assertEquals(Bool(true));
         // making sure key is inside of owners list
         containsPublicKey(this.owners, pKey).assertEquals(true);
         // making sure the right account is requesting a swap
@@ -95,8 +75,7 @@ class SecretExchange extends SmartContract {
             this.balanceP2.set(balanceBefore.add(amount.value));
         }
     }
-    async verifySolution(x, pKey) {
-        containsPublicKey(this.owners, pKey).assertEquals(true);
+    async verify(x) {
         // a * x * x - b * x + c;
         const func = await this.quadraticFunction.get();
         const a = func.a;
@@ -106,7 +85,12 @@ class SecretExchange extends SmartContract {
         let bx = b.mul(x);
         let solution = ax2.sub(bx).add(c);
         // we are checking that x satisfies the equation ax² - bx + c = 0
-        solution.assertEquals(0);
+        let result = solution.equals(0);
+        return result;
+    }
+    async verifySolution(x, pKey) {
+        containsPublicKey(this.owners, pKey).assertEquals(true);
+        (await this.verify(x)).assertEquals(Bool(true));
     }
 }
 __decorate([

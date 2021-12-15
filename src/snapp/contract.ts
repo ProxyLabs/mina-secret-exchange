@@ -57,23 +57,7 @@ class SecretExchange extends SmartContract {
     s: Signature,
     pKey: PublicKey
   ) {
-    // verifiying x again
-    const func = await this.quadraticFunction.get();
-
-    const a = func.a;
-    const b = func.b;
-    const c = func.c;
-
-    let ax2 = a.mul(x).mul(x);
-
-    let bx = b.mul(x);
-
-    let solution = ax2.sub(bx).add(c);
-
-    // we are checking that x satisfies the equation ax² - bx + c = 0
-    solution.assertEquals(0);
-
-    // proceeding with swap
+    (await this.verify(x)).assertEquals(Bool(true));
 
     // making sure key is inside of owners list
     containsPublicKey(this.owners, pKey).assertEquals(true);
@@ -112,23 +96,7 @@ class SecretExchange extends SmartContract {
     s: Signature,
     pKey: PublicKey
   ) {
-    // verifiying x again
-    const func = await this.quadraticFunction.get();
-
-    const a = func.a;
-    const b = func.b;
-    const c = func.c;
-
-    let ax2 = a.mul(x).mul(x);
-
-    let bx = b.mul(x);
-
-    let solution = ax2.sub(bx).add(c);
-
-    // we are checking that x satisfies the equation ax² - bx + c = 0
-    solution.assertEquals(0);
-
-    // proceeding with swap
+    (await this.verify(x)).assertEquals(Bool(true));
 
     // making sure key is inside of owners list
     containsPublicKey(this.owners, pKey).assertEquals(true);
@@ -157,9 +125,7 @@ class SecretExchange extends SmartContract {
     }
   }
 
-  @method async verifySolution(x: Field, pKey: PublicKey) {
-    containsPublicKey(this.owners, pKey).assertEquals(true);
-
+  async verify(x: Field): Promise<Bool> {
     // a * x * x - b * x + c;
     const func = await this.quadraticFunction.get();
 
@@ -174,7 +140,13 @@ class SecretExchange extends SmartContract {
     let solution = ax2.sub(bx).add(c);
 
     // we are checking that x satisfies the equation ax² - bx + c = 0
-    solution.assertEquals(0);
+    let result = solution.equals(0);
+    return result;
+  }
+
+  @method async verifySolution(x: Field, pKey: PublicKey) {
+    containsPublicKey(this.owners, pKey).assertEquals(true);
+    (await this.verify(x)).assertEquals(Bool(true));
   }
 }
 
